@@ -1,109 +1,25 @@
-// Load the http module to create an http server.
-var http = require('http'); 
-var get1 = require('./get1');
-var get2 = require('./get2');
-
-// Create a function to handle every HTTP request
-function handler(req, res){
-
-  var form = '';
-
-  if(req.method == "GET"){ 
-    
-    form = '<!doctype html> \
-<html lang="en"> \
-<head> \
-    <meta charset="UTF-8">  \
-    <title>Form Calculator Add Example</title> \
-</head> \
-<body> \
-  <form name="myForm" action="/" method="post">\
-      <input type="text" name="A"> + \
-      <input type="text" name="B"> = \
-      <span id="result"></span> \
-      <br> \
-      <input type="submit" value="Add"> \
-      <input type="submit" value="Multiply"> \
-  </form> \
-</body> \
-</html>';
-
-  //respond
-  res.setHeader('Content-Type', 'text/html');
-  res.writeHead(200);
-  res.end(form);
-  
-  } else if(req.method == 'POST'){
-
-    //read form data
-    req.on('data', function(chunk) {
-
-      //grab form data as string
-      var formdata = chunk.toString();
-
-      //grab A and B values
-      var a = eval(formdata.split("&")[0]);
-      var b = eval(formdata.split("&")[1])
+// Load the express module to create a server
+var express = require('express');
+var app = express(); 
 
 
-      var result = 0;
-      
-      console.log(req.value());
+//-----List all the implementing api methods------
 
-      //console.log(chunk.toString());
-      //console.log(a);
-      //console.log(b);
-      //console.log(result);
+//API for drawing a card
+app.get('/drawCard', function(request, response) {
+  var deck =  require('./modelClasses/Deck');
+  var theCard = deck.drawCard();
 
-      //fill in the result and form values
-    form = '<!doctype html> \
-<html lang="en"> \
-<head> \
-    <meta charset="UTF-8">  \
-    <title>Form Calculator Add Example</title> \
-</head> \
-<body> \
-  <form name="myForm" action="/" method="post">\
-      <input type="text" name="A" value="'+a+'"> + \
-      <input type="text" name="B" value="'+b+'"> = \
-      <span id="result">'+result+'</span> \
-      <br> \
-      <input type="submit" formaction="/add" value="Add"> \
-      <input type="submit" formaction="/multiply" value="Multiply"> \
-  </form> \
-</body> \
-</html>';
+  response.setHeader("Access-Control-Allow-Origin", "*"); //How much access should be given?
+  response.set("Content-Type", "text/json"); 
+  response.end(JSON.stringify(theCard));
 
-    //respond
-    res.setHeader('Content-Type', 'text/html');
-    res.writeHead(200);
-    res.end(form);
+  console.log(theCard.name + " has been drawn");
+});
 
-    });
+var server = app.listen(8080, function() {
+  var host = server.address().address;
+  var port = server.address().port;
 
-  } else {
-    res.writeHead(200);
-    res.end();
-  };
-
-};
-
-//js functions running only in Node.JS
-function add(a,b){
-  return  Number(a)+Number(b);;
-}
-
-function multiply(a,b) {
-  return Number(a) * Number(b);;
-}
-
-
-
-// Create a server that invokes the `handler` function upon receiving a request
-http.createServer(handler).listen(8080, function(err){
-  if(err){
-    console.log('Error starting http server');
-  } else {
-    console.log("Server running at http://127.0.0.1:8080/ or http://localhost:8080/");
-  };
+  console.log("CardStone server listening at http://%s:%s", host, port);
 });

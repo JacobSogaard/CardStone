@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<p>Hello World!</p>
+
+<!-- The button that calls the drawCard function -->
+<button onclick="drawCard()" type="button" id="demo">Draw a Card!</button>
+
+<!-- The text that changes when drawCard is called -->
+<p id="devTestCard">Your card!</p>
+
+<!-- JavaScript responsible for displaying the new card after it has been drawn 
+using a GET request to the server-->
+<script type="text/javascript">
+	function drawCard() {
+		//Send the request
+		const url = 'http://localhost:8080/drawCard';
+		const Http = new XMLHttpRequest();
+		Http.responseType = 'json';
+		Http.open("GET", url);		
+		Http.send();
+
+		//Act on the data received from the request
+		Http.onload = function() {
+			const data =  Http.response;
+			console.log("Data from GET request at: " + url + ":\n" + JSON.stringify(data));
+			document.getElementById("devTestCard").innerHTML = data.name;
+		}
+
+	}
+</script>
+
+</body>
+</html>
