@@ -6,11 +6,11 @@
     "configurations": [
         
         {
-            "name": "Launch server.js",
+            "name": "Launch Frontpage",
             "type": "firefox",
             "request": "launch",
             "reAttach": true,
-            "file": "${workspaceFolder}/server.js"
+            "file": "${workspaceFolder}/Frontpage.html"
         }
     ]
 }

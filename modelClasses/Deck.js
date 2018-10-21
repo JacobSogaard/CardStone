@@ -3,4 +3,4 @@
 exports.drawCard = function(cardToDraw) {
 	theCard = require('../cards/card' + cardToDraw + '.json');
 	return theCard;
-}
+};
