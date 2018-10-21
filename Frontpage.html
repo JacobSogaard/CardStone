@@ -4,8 +4,9 @@
 <body>
 <p>Hello World!</p>
 
-<!-- The button that calls the drawCard function -->
-<button onclick="drawCard()" type="button" id="demo">Draw a Card!</button>
+<!-- The buttons that call the drawCard function -->
+<button onclick="drawCard('1')" type="button" id="demo">Player 1 \n Draw a Card!</button>
+<button onclick="drawCard('2')" type="button" id="demo">Player 2 \n Draw a Card!</button>
 
 <!-- The text that changes when drawCard is called -->
 <p id="devTestCard">Your card!</p>
@@ -13,9 +14,9 @@
 <!-- JavaScript responsible for displaying the new card after it has been drawn 
 using a GET request to the server-->
 <script type="text/javascript">
-	function drawCard() {
+	function drawCard(playerId) {
 		//Send the request
-		const url = 'http://localhost:8080/drawCard';
+		const url = 'http://localhost:8080/drawCard/1/' + playerId;
 		const Http = new XMLHttpRequest();
 		Http.responseType = 'json';
 		Http.open("GET", url);		

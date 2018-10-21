@@ -1,0 +1,8 @@
+{
+	"name": "Hot Dragon",
+	"cost": 4,
+	"attack": 5,
+	"health": 2,
+	"text": "Not a very cool dragon",
+	"effects": []
+}
