@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h1>This is your game id</h1><br><br>
+
+	<p id="opponent">Opponent</p>
+	<p id="opponentCard">This is your opponent's card</p>
+	<br><br>
+
+	<p id""player">Player</p>
+	<p id="playerCard">This is your card</p>
+
+	<button id="drawCardBTN" onclick="drawCard()">Draw a card!</button>
+	<button id="lookForUpdatesBTN" onclick="lookForUpdates()">Look for updates!</button>
+
+	<script type="text/javascript" id="APICallDrawCardFunc">
+		function drawCard() {
+			const url = 'http://10.126.25.230:8080/drawCard/1/1';
+			const xhr = new XMLHttpRequest();
+			xhr.open("GET", url);
+			xhr.send();
+
+			xhr.onload = function() {
+				var cardDrawn = JSON.parse(xhr.response);
+				console.log(cardDrawn);
+				document.getElementById("playerCard").innerHTML = "You have drawn:\n" + cardDrawn.name;
+			}
+			
+		}
+	</script>
+
+	<script type="text/javascript" id="APICallLookForUpdatesFunc">
+		function lookForUpdates() {
+			document.getElementById("opponentCard").innerHTML = "Your opponent has drawn: " +  "nothing yet because this function needs implementation";
+		}
+		
+	</script>
+
+</body>
+</html>
