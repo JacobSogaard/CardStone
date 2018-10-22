@@ -2,11 +2,17 @@
 <html>
 <head></head>
 <body>
-<p>Hello World!</p>
+<p>Frontpage</p>
 
 <!-- The buttons that call the drawCard function -->
-<button onclick="drawCard('1')" type="button" id="player1DrawCard">Player 1 \n Draw a Card!</button>
-<button onclick="drawCard('2')" type="button" disabled id="player2DrawCard">Player 2 \n Draw a Card!</button>
+
+
+	<input type="text" id="gameId"/>
+	<input type="text" id="playerId"/>
+	<button onclick="join()" type="submit" id="joinBTN">Join</button>/>
+	<button onclick="createGame()" type="submit" id="createGame">Create</button>/>
+
+
 
 <!-- The text that changes when drawCard is called -->
 <p id="devTestCard">Your card!</p>
@@ -15,9 +21,52 @@
 using a GET request to the server-->
 <script type="text/javascript">
 
+	function getXhr(targetUrl) {
+		
+		return xhr;
+	}
+
+	function createGame() {
+		console.log("Create game");
+		const gameId = document.getElementById("gameId");
+		const playerId = document.getElementById("playerId");
+		const targetUrl = 'createGame/' + gameId.value + "/" + playerId.value;
+		const url = 'http://10.126.25.230:8080/' + targetUrl;
+		const xhr = new XMLHttpRequest();
+		xhr.response = 'json';
+		xhr.open("GET", url);
+		xhr.send();
+
+		xhr.onreadystatechange = processreq;
+
+
+
+		//Act on the data received from the request
+		function processreq(e) { 
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				const data =  xhr.response;
+				console.log("Data from GET request at: " + url + ":\n" + JSON.stringify(data));
+				document.getElementById("devTestCard").innerHTML = data.name;
+			}
+		}
+		
+	
+	}
+
+	function join() {
+		const targetUrl = 'joinGame/' + gameId + "/" + playerId;
+		const url = 'http://10.126.25.230:8080/' + targetUrl;
+		const xhr = new XMLHttpRequest();
+		xhr.response = 'json';
+		xhr.open("GET", url);
+		xhr.send();
+
+
+	}
+
 	function drawCard(playerId) {
 		//Send the request
-		const url = 'http://localhost:8080/drawCard/1/' + playerId;
+		const url = 'http://10.126.25.230:8080/drawCard/1/' + playerId;
 		const Http = new XMLHttpRequest();
 		Http.responseType = 'json';
 		Http.open("GET", url);		
@@ -30,11 +79,17 @@ using a GET request to the server-->
 			document.getElementById("player" + 1 + "DrawCard").disabled = false;
 		}
 
+		Http.onreadystatechange = processreq;
+
+
+
 		//Act on the data received from the request
-		Http.onload = function() {
-			const data =  Http.response;
-			console.log("Data from GET request at: " + url + ":\n" + JSON.stringify(data));
-			document.getElementById("devTestCard").innerHTML = data.name;
+		function processreq(e) { 
+			if (Http.readyState == 4 && Http.status == 200) {
+				const data =  Http.response;
+				console.log("Data from GET request at: " + url + ":\n" + JSON.stringify(data));
+				document.getElementById("devTestCard").innerHTML = data.name;
+			}
 		}
 
 	}
