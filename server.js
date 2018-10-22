@@ -1,9 +1,13 @@
 // Load the express module to create a server
 var express = require('express');
 var app = express(); 
+var path = require('path');
 
 
 //-----List all the implementing api methods------
+app.get('/', function(request, response) {
+  response.sendFile(path.join(__dirname+'/Frontpage.html'));
+});
 
 //API for drawing a card based on the game and the player (GameId has not yet been implemented)
 app.get('/drawCard/:gameId/:playerId', function(request, response) {
