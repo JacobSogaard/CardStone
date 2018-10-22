@@ -1,13 +1,35 @@
 // Load the express module to create a server
 var express = require('express');
 var app = express(); 
+app.set('view engine', 'ejs');  
 var path = require('path');
-
+var games = [];
 
 //-----List all the implementing api methods------
+
+//API for starting the front page. Should also asign player id.
 app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname+'/Frontpage.html'));
 });
+
+
+app.get('/joinGame/:gameId/:playerId', function(request, response) {
+
+});
+
+app.get('/createGame/:gameId/:playerId', function(request, response) {
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  var game = require('./modelClasses/Game');
+  games.push(game);
+  console.log(games.length);
+  //response.sendFile(path.join(__dirname+'Gamepage.html'));
+
+  response.render('Gamepage', {
+    playerId: '323'
+  });
+
+});
+
 
 //API for drawing a card based on the game and the player (GameId has not yet been implemented)
 app.get('/drawCard/:gameId/:playerId', function(request, response) {
