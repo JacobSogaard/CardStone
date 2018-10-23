@@ -31,7 +31,7 @@ using a GET request to the server-->
 		const gameId = document.getElementById("gameId");
 		const playerId = document.getElementById("playerId");
 		const targetUrl = 'createGame/' + gameId.value + "/" + playerId.value;
-		const url = 'http://10.126.25.230:8080/' + targetUrl;
+		const url = 'http://localhost:8080/' + targetUrl;
 		const xhr = new XMLHttpRequest();
 		xhr.response = 'json';
 		xhr.open("GET", url);
@@ -46,7 +46,7 @@ using a GET request to the server-->
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				const data =  xhr.response;
 				console.log("Data from GET request at: " + url + ":\n" + JSON.stringify(data));
-				document.getElementById("devTestCard").innerHTML = data.name;
+				//document.getElementById("devTestCard").innerHTML = data.name;
 			}
 		}
 		
