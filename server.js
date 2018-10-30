@@ -22,10 +22,14 @@ app.get('/joinGame/:gameId/:playerId', function(request, response) {
 });
 
 app.get('/createGame/:gameId/:playerId', function(request, response) {
-  response.setHeader("Access-Control-Allow-Origin", "*");
   var game = require('./modelClasses/Game');
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.set("Content-Type", "text/json"); 
+
   games.push(game);
+  
   console.log(games.length);
+
 });
 
 
