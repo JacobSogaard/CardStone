@@ -11,6 +11,7 @@
 	<input type="text" id="playerId"/>
 	<button onclick="join()" type="submit" id="joinBTN">Join</button>/>
 	<button onclick="createGame()" type="submit" id="createGame">Create</button>/>
+	<a href="http://localhost:8080/InProgressGame">Her!</a>
 
 
 
@@ -27,13 +28,15 @@ using a GET request to the server-->
 	}
 
 	function createGame() {
+		localStorage.setItem("101", "Det her er en test");
+		
 		console.log("Create game");
 		const gameId = document.getElementById("gameId");
 		const playerId = document.getElementById("playerId");
 		const targetUrl = 'createGame/' + gameId.value + "/" + playerId.value;
-		const url = 'http://10.126.25.230:8080/' + targetUrl;
+		const url = 'http://localhost:8080/' + targetUrl;
 		const xhr = new XMLHttpRequest();
-		xhr.response = 'json';
+		xhr.response = 'html';
 		xhr.open("GET", url);
 		xhr.send();
 
@@ -55,7 +58,7 @@ using a GET request to the server-->
 
 	function join() {
 		const targetUrl = 'joinGame/' + gameId + "/" + playerId;
-		const url = 'http://10.126.25.230:8080/' + targetUrl;
+		const url = 'http://localhost:8080/' + targetUrl;
 		const xhr = new XMLHttpRequest();
 		xhr.response = 'json';
 		xhr.open("GET", url);
@@ -66,7 +69,7 @@ using a GET request to the server-->
 
 	function drawCard(playerId) {
 		//Send the request
-		const url = 'http://10.126.25.230:8080/drawCard/1/' + playerId;
+		const url = 'http://localhost:8080/drawCard/1/' + playerId;
 		const Http = new XMLHttpRequest();
 		Http.responseType = 'json';
 		Http.open("GET", url);		

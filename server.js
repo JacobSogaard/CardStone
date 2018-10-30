@@ -13,6 +13,10 @@ app.get('/', function(request, response) {
 });
 
 
+app.get('/InProgressGame', function(request, response) {
+  response.sendFile(path.join(__dirname+'/InProgressGame.html'));
+});
+
 app.get('/joinGame/:gameId/:playerId', function(request, response) {
 
 });
@@ -22,11 +26,7 @@ app.get('/createGame/:gameId/:playerId', function(request, response) {
   var game = require('./modelClasses/Game');
   games.push(game);
   console.log(games.length);
-  //response.sendFile(path.join(__dirname+'Gamepage.html'));
-
-  response.render('Gamepage', {
-    playerId: '323'
-  });
+  response.sendFile(path.join(__dirname+'/InGameProgress.html'));
 
 });
 
