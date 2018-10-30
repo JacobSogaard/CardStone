@@ -26,8 +26,6 @@ app.get('/createGame/:gameId/:playerId', function(request, response) {
   var game = require('./modelClasses/Game');
   games.push(game);
   console.log(games.length);
-  response.sendFile(path.join(__dirname+'/InGameProgress.html'));
-
 });
 
 
