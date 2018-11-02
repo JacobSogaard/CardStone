@@ -3,7 +3,7 @@ var express = require('express');
 var app = express(); 
 app.set('view engine', 'ejs');  
 var path = require('path');
-var games = [];
+var games = {};
 
 //-----List all the implementing api methods------
 
@@ -19,14 +19,25 @@ app.get('/InProgressGame', function(request, response) {
 
 app.get('/joinGame/:gameId/:playerId', function(request, response) {
 
+  var game = games[request.params.gameId];
+  game.join(request.params.playerId);
+  console.log("This is game after joining: ");
+  console.log(game);
+
+  response.sendFile(path.join(__dirname+'/InProgressGame.html'));
 });
 
 app.get('/createGame/:gameId/:playerId', function(request, response) {
   response.setHeader("Access-Control-Allow-Origin", "*");
   var game = require('./modelClasses/Game');
-  games.push(game);
-  console.log(games.length);
-  response.sendFile(path.join(__dirname+'/InGameProgress.html'));
+  var playerName = request.params.playerId;
+  game.create(playerName);
+
+
+  //console.log(game);
+  games[request.params.gameId] = game;
+  
+  response.sendFile(path.join(__dirname+'/InProgressGame.html'));
 
 });
 
