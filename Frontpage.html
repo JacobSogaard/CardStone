@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head></head>
+<style>
+.content {
+	max-width: 500px;
+	margin: auto;
+}
+</style>
+
+<style>
+	.buttons {
+		margin-bottom: 30px;
+	}
+</style>
+
 <body>
-<p>Frontpage</p>
 
-<!-- The buttons that call the drawCard function -->
+<div align="center" class="content">
+		<h1> Frontpage </h1>
+<title>Frontpage</title>
 
+<form>
+	<input type="text" id="gameId" placeholder="Your game id"/>
+	<input type="text" id="playerId" placeholder="Your player id"/>
+</form>
+<br>
+<form action="http://localhost:8080/InProgressGame">
+	<button onclick="join()" type="submit" id="joinBTN">Join</button>
+</form>
+	<br>	
+<form action="http://localhost:8080/InProgressGame">
+	<button onclick="create()" type="submit" id="createGame">Create</button>
+</form>
+</div>
 
-	<input type="text" id="gameId"/>
-	<input type="text" id="playerId"/>
-	<button onclick="join()" type="submit" id="joinBTN">Join</button>/>
-	<button onclick="createGame()" type="submit" id="createGame">Create</button>/>
-	<a href="http://localhost:8080/InProgressGame">Her!</a>
-
-
-
-<!-- The text that changes when drawCard is called -->
-<p id="devTestCard">Your card!</p>
 
 <!-- JavaScript responsible for displaying the new card after it has been drawn 
 using a GET request to the server-->
@@ -27,10 +43,9 @@ using a GET request to the server-->
 		return xhr;
 	}
 
-	function createGame() {
-		const playerId = document.getElementById("playerId");
-		const gameId = document.getElementById("gameId");
-		localStorage.setItem("gameId", gameId); //Save for later client use
+
+	function create() {
+		localStorage.setItem("101", "Det her er en test");
 		
 		console.log("Create game");
 				
@@ -53,8 +68,6 @@ using a GET request to the server-->
 				document.getElementById("devTestCard").innerHTML = data.name;
 			}
 		}
-		
-	
 	}
 
 	function join() {
@@ -69,6 +82,7 @@ using a GET request to the server-->
 
 
 	}
+	
 
 	function drawCard(playerId) {
 		//Send the request

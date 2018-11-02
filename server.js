@@ -38,7 +38,6 @@ app.get('/createGame/:gameId/:playerId', function(request, response) {
   games[request.params.gameId] = game;
   
   response.sendFile(path.join(__dirname+'/InProgressGame.html'));
-
 });
 
 
