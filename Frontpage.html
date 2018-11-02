@@ -48,8 +48,7 @@ using a GET request to the server-->
 		localStorage.setItem("101", "Det her er en test");
 		
 		console.log("Create game");
-		const gameId = document.getElementById("gameId");
-		const playerId = document.getElementById("playerId");
+				
 		const targetUrl = 'createGame/' + gameId.value + "/" + playerId.value;
 		const url = 'http://localhost:8080/' + targetUrl;
 		const xhr = new XMLHttpRequest();
@@ -72,7 +71,9 @@ using a GET request to the server-->
 	}
 
 	function join() {
-		const targetUrl = 'joinGame/' + gameId + "/" + playerId;
+		const playerId = document.getElementById("playerId");
+		const gameId = document.getElementById("gameId");
+		const targetUrl = 'joinGame/' + gameId.value + "/" + playerId.value;
 		const url = 'http://localhost:8080/' + targetUrl;
 		const xhr = new XMLHttpRequest();
 		xhr.response = 'json';
