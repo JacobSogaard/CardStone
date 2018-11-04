@@ -2,20 +2,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Game</title>
+	<link rel="stylesheet" href="styles.css">
 </head>
+
+
 <body>
-	<h1>This is your game id</h1><br><br>
 
-	<p id="opponent">Opponent</p>
-	<p id="opponentCard">This is your opponent's card</p>
-	<br><br>
+<div class="container">
+	<img src="Images/cardback" alt="card" id="ophand1" style="width:5%;">
+	<img src="Images/cardback" alt="card" id="ophand2" style="width:5%;">
+	<img src="Images/cardback" alt="card" id="ophand3" style="width:5%;">
+	<img src="Images/cardback" alt="card" id="ophand4" style="width:5%;">
+	<img src="Images/cardback" alt="card" id="ophand5" style="width:5%;">
+	<img src="Images/cardback" alt="card" id="ophand6" style="width:5%;">
+	<img src="Images/cardback" alt="card" id="ophand7" style="width:5%;">
+	<img src="Images/cardback" alt="card" id="ophand8" style="width:5%;">
+	<img src="Images/cardback" alt="card" id="ophand9" style="width:5%;">
+	<img src="Images/cardback" alt="card" id="ophand10" style="width:5%;">
+</div> 
+<br><br>
+<!-- Opponent cards on board -->
+<div class="container">
+	<img src="Images/cardback" alt="card" id="opboard1" style="width:6%;">
+	<img src="Images/cardback" alt="card" id="opboard2" style="width:6%;">
+	<img src="Images/cardback" alt="card" id="opboard3" style="width:6%;">
+	<img src="Images/cardback" alt="card" id="opboard4" style="width:6%;">
+	<img src="Images/cardback" alt="card" id="opboard5" style="width:6%;">
+	<img src="Images/cardback" alt="card" id="opboard6" style="width:6%;">
+	<img src="Images/cardback" alt="card" id="opboard7" style="width:6%;">
+	<img src="Images/cardback" alt="card" id="opboard8" style="width:6%;">
+	<img src="Images/cardback" alt="card" id="opboard9" style="width:6%;">
+	<img src="Images/cardback" alt="card" id="opboard10" style="width:6%;">
+</div> 
+<br><br><br>
 
-	<p id""player">Player</p>
-	<p id="playerCard">This is your card</p>
+<!-- Player cards on board -->
+<div class="container">
+	<img src="Images/cardback" alt="empty" id="pboard1" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/cardback" alt="empty" id="pboard2" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/cardback" alt="empty" id="pboard3" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/cardback" alt="empty" id="pboard4" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/cardback" alt="empty" id="pboard5" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/cardback" alt="empty" id="pboard6" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/cardback" alt="empty" id="pboard7" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/cardback" alt="empty" id="pboard8" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/cardback" alt="empty" id="pboard9" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/cardback" alt="empty" id="pboard10" onclick="playCard(this)" style="width:6%;">
+</div> 
 
-	<button id="drawCardBTN" onclick="drawCard()">Draw a card!</button>
-	<button id="lookForUpdatesBTN" onclick="lookForUpdates()">Look for updates!</button>
+<br><br>
+<br>
+<!-- Player cards in hand -->
+<div class="container">
+	<img src="Images/card" alt="card" id="phand1" onclick="selectcard(this)" style="width:5%;">
+	<img src="Images/card" alt="card" id="phand2" onclick="selectcard(this)" style="width:5%;">
+	<img src="Images/card" alt="card" id="phand3" onclick="selectcard(this)" style="width:5%;">
+	<img src="Images/card" alt="card" id="phand4" onclick="selectcard(this)" style="width:5%;">
+	<img src="Images/card" alt="card" id="phand5" onclick="selectcard(this)" style="width:5%;">
+	<img src="Images/card" alt="card" id="phand6" onclick="selectcard(this)" style="width:5%;">
+	<img src="Images/card" alt="card" id="phand7" onclick="selectcard(this)" style="width:5%;">
+	<img src="Images/card" alt="card" id="phand8" onclick="selectcard(this)" style="width:5%;">
+	<img src="Images/card" alt="card" id="phand9" onclick="selectcard(this)" style="width:5%;">
+	<img src="Images/card" alt="card" id="phand10" onclick="selectcard(this)" style="width:5%;">
+	<div>
+		<button id="drawCardBTN" onclick="drawCard()">Draw a card!</button>
+		<button id="lookForUpdatesBTN" onclick="lookForUpdates()">Look for updates!</button>
+	</div>
+</div> 
+
+
+
+	
+<script type="text/javascript">
+	var selectedCard = "0";
+
+	function selectcard(card){
+		selectedCard = card;
+	}
+
+	function playCard(pos){
+		console.log(selectedCard.src);
+		console.log(pos.src);
+		if (selectedCard.alt != "card" || pos.alt != "empty") {
+			console.log(true);
+			return;
+		}
+
+		console.log("Change card");
+		document.getElementById(pos.id).src = selectedCard.src;
+		document.getElementById(pos.id).alt = "card";
+		document.getElementById(selectedCard.id).src = "Images/cardback";
+		document.getElementById(selectedCard.id).alt = "empty";
+	}
+</script>
+	
 
 	<script type="text/javascript" id="APICallDrawCardFunc">
 		function drawCard() {

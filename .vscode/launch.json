@@ -10,7 +10,7 @@
             "type": "firefox",
             "request": "launch",
             "reAttach": true,
-            "file": "${workspaceFolder}/Frontpage.html"
+            "file": "${workspaceFolder}/InProgressGame.html"
         }
     ]
 }
