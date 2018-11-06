@@ -4,5 +4,6 @@
 	"attack": 4,
 	"health": 2,
 	"text": "Not a very hot dragon",
-	"effects": []
+	"effects": [],
+	"id": ""
 }
