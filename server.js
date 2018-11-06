@@ -54,6 +54,21 @@ app.get('/drawCard/:gameId/:playerId', function(request, response) {
   console.log(theCard.name + " has been drawn");
 });
 
+app.get('/playCard/:gameId/:playerId/:cardId/:placeOnBoard', function(request, response) {
+  var gameUpdate = games[request.params.gameId].playCard(params.playerId, params.cardId, placeOnBoard);
+
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.set("Content-Type", "text/json"); 
+  response.end(JSON.stringify(gameUpdate));
+
+  console.log("Updated game after playing a card: " + JSON.stringify(gameUpdate));
+
+});
+
+app.get('/endTurn/:gameId', function(request, response) {
+  games[request.params.gameId].endTurn();
+});
+
 var server = app.listen(8080, function() {
   var host = server.address().address;
   var port = server.address().port;

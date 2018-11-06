@@ -5,6 +5,7 @@ exports.drawCard = function(cardToDraw) {
 	return theCard;
 };
 
+
 exports.getDeck = function(theDeck) {
 	var fs  = require('fs');
 	var path = './decks/' + theDeck + '.json';
