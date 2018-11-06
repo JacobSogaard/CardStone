@@ -24,31 +24,31 @@
 <br><br>
 <!-- Opponent cards on board -->
 <div class="container">
-	<img src="Images/cardback" alt="card" id="opboard1" style="width:6%;">
-	<img src="Images/cardback" alt="card" id="opboard2" style="width:6%;">
-	<img src="Images/cardback" alt="card" id="opboard3" style="width:6%;">
-	<img src="Images/cardback" alt="card" id="opboard4" style="width:6%;">
-	<img src="Images/cardback" alt="card" id="opboard5" style="width:6%;">
-	<img src="Images/cardback" alt="card" id="opboard6" style="width:6%;">
-	<img src="Images/cardback" alt="card" id="opboard7" style="width:6%;">
-	<img src="Images/cardback" alt="card" id="opboard8" style="width:6%;">
-	<img src="Images/cardback" alt="card" id="opboard9" style="width:6%;">
-	<img src="Images/cardback" alt="card" id="opboard10" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard1" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard2" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard3" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard4" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard5" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard6" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard7" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard8" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard9" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard10" style="width:6%;">
 </div> 
 <br><br><br>
 
 <!-- Player cards on board -->
 <div class="container">
-	<img src="Images/cardback" alt="empty" id="pboard1" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/cardback" alt="empty" id="pboard2" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/cardback" alt="empty" id="pboard3" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/cardback" alt="empty" id="pboard4" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/cardback" alt="empty" id="pboard5" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/cardback" alt="empty" id="pboard6" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/cardback" alt="empty" id="pboard7" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/cardback" alt="empty" id="pboard8" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/cardback" alt="empty" id="pboard9" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/cardback" alt="empty" id="pboard10" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/empty.png" alt="empty" id="pboard1" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/empty.png" alt="empty" id="pboard2" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/empty.png" alt="empty" id="pboard3" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/empty.png" alt="empty" id="pboard4" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/empty.png" alt="empty" id="pboard5" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/empty.png" alt="empty" id="pboard6" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/empty.png" alt="empty" id="pboard7" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/empty.png" alt="empty" id="pboard8" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/empty.png" alt="empty" id="pboard9" onclick="playCard(this)" style="width:6%;">
+	<img src="Images/empty.png" alt="empty" id="pboard10" onclick="playCard(this)" style="width:6%;">
 </div> 
 
 <br><br>
@@ -75,7 +75,7 @@
 
 	
 <script type="text/javascript">
-	var selectedCard = "0";
+	var selectedCard = "0"; //Handles the card that is currently selected.
 
 	function selectcard(card){
 		selectedCard = card;
@@ -92,7 +92,7 @@
 		console.log("Change card");
 		document.getElementById(pos.id).src = selectedCard.src;
 		document.getElementById(pos.id).alt = "card";
-		document.getElementById(selectedCard.id).src = "Images/cardback";
+		document.getElementById(selectedCard.id).src = "Images/empty.png";
 		document.getElementById(selectedCard.id).alt = "empty";
 	}
 </script>
