@@ -44,14 +44,29 @@ app.get('/createGame/:gameId/:playerId', function(request, response) {
 
 //API for drawing a card based on the game and the player (GameId has not yet been implemented)
 app.get('/drawCard/:gameId/:playerId', function(request, response) {
-  var deck =  require('./modelClasses/Deck');
-  var theCard = deck.drawCard(request.params.playerId);
+  var game = games[request.params.gameId];
+  var cardDrawn = game.drawCard(request.params.playerId);
 
   response.setHeader("Access-Control-Allow-Origin", "*"); //How much access should be given?
   response.set("Content-Type", "text/json"); 
-  response.end(JSON.stringify(theCard));
+  response.end(JSON.stringify(cardDrawn));
 
   console.log(theCard.name + " has been drawn");
+});
+
+app.get('/playCard/:gameId/:playerId/:cardId/:placeOnBoard', function(request, response) {
+  var gameUpdate = games[request.params.gameId].playCard(params.playerId, params.cardId, placeOnBoard);
+
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.set("Content-Type", "text/json"); 
+  response.end(JSON.stringify(gameUpdate));
+
+  console.log("Updated game after playing a card: " + JSON.stringify(gameUpdate));
+
+});
+
+app.get('/endTurn/:gameId', function(request, response) {
+  games[request.params.gameId].endTurn();
 });
 
 var server = app.listen(8080, function() {
