@@ -8,6 +8,7 @@
 }
 
 
+
 /* Bottom left text */
 .bottom-left {
     position: absolute;
@@ -55,4 +56,9 @@
 .cardblock {
     display: inline-block;
 
+}
+
+.button { 
+    padding: 10px;
+    display: inline-block;
 }
