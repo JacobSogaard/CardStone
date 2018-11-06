@@ -24,21 +24,32 @@
 <br><br>
 <!-- Opponent cards on board -->
 <div class="container">
-	<img src="Images/empty.png" alt="card" id="opboard1" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard2" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard3" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard4" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard5" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard6" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard7" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard8" style="width:6%;">
 	<img src="Images/empty.png" alt="card" id="opboard9" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard10" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard8" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard7" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard6" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard5" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard4" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard3" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard2" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard1" style="width:6%;">
+	<img src="Images/empty.png" alt="card" id="opboard0" style="width:6%;">
 </div> 
 <br><br><br>
 
 <!-- Player cards on board -->
 <div class="container">
+	<div class="button">
+		<button id="lookForUpdatesBTN" onclick="lookForUpdates()">Look for updates!</button>
+	</div>
+	<br>
+	<div class="button">
+		<button id="drawCardBTN" onclick="drawCard()">Draw a card!</button>
+	</div>
+	<div class="button">
+			<button id="endTurnBTN" onclick="endTurn()">End turn!</button>
+	</div>
+	<img src="Images/empty.png" alt="empty" id="pboard0" onclick="playCard(this)" style="width:6%;">
 	<img src="Images/empty.png" alt="empty" id="pboard1" onclick="playCard(this)" style="width:6%;">
 	<img src="Images/empty.png" alt="empty" id="pboard2" onclick="playCard(this)" style="width:6%;">
 	<img src="Images/empty.png" alt="empty" id="pboard3" onclick="playCard(this)" style="width:6%;">
@@ -48,7 +59,6 @@
 	<img src="Images/empty.png" alt="empty" id="pboard7" onclick="playCard(this)" style="width:6%;">
 	<img src="Images/empty.png" alt="empty" id="pboard8" onclick="playCard(this)" style="width:6%;">
 	<img src="Images/empty.png" alt="empty" id="pboard9" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/empty.png" alt="empty" id="pboard10" onclick="playCard(this)" style="width:6%;">
 </div> 
 
 <br><br>
@@ -65,10 +75,6 @@
 	<img src="Images/card" alt="card" id="phand8" onclick="selectcard(this)" style="width:5%;">
 	<img src="Images/card" alt="card" id="phand9" onclick="selectcard(this)" style="width:5%;">
 	<img src="Images/card" alt="card" id="phand10" onclick="selectcard(this)" style="width:5%;">
-	<div>
-		<button id="drawCardBTN" onclick="drawCard()">Draw a card!</button>
-		<button id="lookForUpdatesBTN" onclick="lookForUpdates()">Look for updates!</button>
-	</div>
 </div> 
 
 
@@ -95,9 +101,15 @@
 		document.getElementById(selectedCard.id).src = "Images/empty.png";
 		document.getElementById(selectedCard.id).alt = "empty";
 	}
+
+	function endTurn(){
+		const url = 'http://localhost:8080/endTurn/';
+		const xhr = new XMLHttpRequest();
+		xhr.open("PUT", url);
+		xhr.send();
+	}
 </script>
 	
-
 	<script type="text/javascript" id="APICallDrawCardFunc">
 		function drawCard() {
 			const url = 'http://localhost:8080/drawCard/1/1';
