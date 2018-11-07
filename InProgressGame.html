@@ -95,6 +95,9 @@
 			return;
 		}
 
+		//const url = 'http://localhost:8080/playCard/';
+		const xhr = XMLHttpRequest;
+
 		console.log("Change card");
 		document.getElementById(pos.id).src = selectedCard.src;
 		document.getElementById(pos.id).alt = "card";
@@ -107,6 +110,7 @@
 		const xhr = new XMLHttpRequest();
 		xhr.open("PUT", url);
 		xhr.send();
+		document.getElementById("EndTurnBTN").disabled = true;
 	}
 </script>
 	
@@ -130,7 +134,8 @@
 		function lookForUpdates() {
 			var testObj = localStorage.getItem("101");
 			console.log(testObj);
-			document.getElementById("opponentCard").innerHTML = "Your opponent has drawn: " +  "nothing yet because this function needs implementation ";
+			//document.getElementById("opponentCard").innerHTML = "Your opponent has drawn: " +  "nothing yet because this function needs implementation ";
+			
 		}
 		
 	</script>
