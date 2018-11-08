@@ -20,7 +20,7 @@ exports.endTurn = function() {
 	} else {
 		this.currentPlayer = 'p1'; 
 	}
-}
+};
 
 
 exports.create = function(playerName) {
@@ -29,7 +29,7 @@ exports.create = function(playerName) {
 	//this.player1.setName(playerName);
 	this.player1.name = playerName;
 	this.setDeck('player1');
-}
+};
 
 exports.join = function(playerName) {
 	console.log("Join call: " + playerName);
@@ -37,7 +37,7 @@ exports.join = function(playerName) {
 	//this.player2.setName(playerName);
 	this.player2.name = playerName;
 	this.setDeck('player2');
-}
+};
 
 exports.attack = function(attacker, defender, attIndex, defIndex) {
 	var attHealth = attacker.health - defender.attack;
@@ -70,7 +70,7 @@ exports.attack = function(attacker, defender, attIndex, defIndex) {
 			this.player1.board[Number(defIndex)].health = defHealth;
 		}
 	}
-}
+};
 
 exports.playCard = function(playerName, cardToPlay, placeOnBoard) {
 	if (playerName == this.player1.name) {
@@ -91,7 +91,7 @@ exports.playCard = function(playerName, cardToPlay, placeOnBoard) {
 			}
 		}
 	}
-}
+};
 
 exports.drawCard = function(playerName) {
 	var cardDrawn;
@@ -106,7 +106,7 @@ exports.drawCard = function(playerName) {
 	}
 
 	return cardDrawn;
-}
+};
 
 exports.setDeck = function(thePlayer) {
 	var fs = require('fs');
@@ -126,6 +126,6 @@ exports.setDeck = function(thePlayer) {
 			this.player2.deck.push(tempCard);
 		}
 	}
-}
+};
 
 

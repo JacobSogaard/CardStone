@@ -14,10 +14,10 @@
 </style>
 
 <body>
+<title>Frontpage</title>
 
 <div align="center" class="content">
 		<h1> Frontpage </h1>
-<title>Frontpage</title>
 
 <form>
 	<input type="text" id="gameId" placeholder="Your game id"/>
@@ -39,17 +39,18 @@ using a GET request to the server-->
 <script type="text/javascript">
 
 	function getXhr(targetUrl) {
-		
 		return xhr;
 	}
 
 
 	function create() {
-		localStorage.setItem("101", "Det her er en test");
-		
-		console.log("Create game");
+		const playerId = document.getElementById("playerId").value;
+		const gameId = document.getElementById("gameId").value;
+
+		sessionStorage.setItem("gameId", gameId);
+		sessionStorage.setItem("playerId", playerId);
 				
-		const targetUrl = 'createGame/' + gameId.value + "/" + playerId.value;
+		const targetUrl = 'createGame/' + gameId + "/" + playerId;
 		const url = 'http://localhost:8080/' + targetUrl;
 		const xhr = new XMLHttpRequest();
 		xhr.response = 'html';

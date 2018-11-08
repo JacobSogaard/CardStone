@@ -10,7 +10,7 @@
 <body>
 
 <div class="container">
-	<img src="Images/cardback" alt="card" id="ophand1" style="width:5%;">
+	<img src="http://localhost:8080/Images/cardback" alt="card" id="ophand1" style="width:5%;">
 	<img src="Images/cardback" alt="card" id="ophand2" style="width:5%;">
 	<img src="Images/cardback" alt="card" id="ophand3" style="width:5%;">
 	<img src="Images/cardback" alt="card" id="ophand4" style="width:5%;">
@@ -81,6 +81,14 @@
 
 	
 <script type="text/javascript">
+
+	//NEXT TODO: Figure out how to save gameid and playerid (both players)
+	// What card id to send and how to send place on board (place on board might just need to be the number)
+	// How to take all this scripting and put it in a seperate file. 
+
+	//Get game and playerid from somewhere when this page is started
+
+
 	var selectedCard = "0"; //Handles the card that is currently selected.
 
 	function selectcard(card){
@@ -95,14 +103,29 @@
 			return;
 		}
 
-		//const url = 'http://localhost:8080/playCard/';
-		const xhr = XMLHttpRequest;
+		const gameId = sessionStorage.getItem("gameId");
+		const playerId = sessionStorage.getItem("playerId");
+		const boardId = pos.id;
+		const cardId = pos.src.substring(29, pos.src.length); //Stupid workaround to cardname from img source
 
-		console.log("Change card");
-		document.getElementById(pos.id).src = selectedCard.src;
-		document.getElementById(pos.id).alt = "card";
-		document.getElementById(selectedCard.id).src = "Images/empty.png";
-		document.getElementById(selectedCard.id).alt = "empty";
+		console.log("Card" + cardId);
+
+		const url = `http://localhost:8080/playCard/${gameId}/${playerId}/${cardId}/${pos.id}`;
+		const xhr = new XMLHttpRequest();
+		xhr.open("GET", url);
+		xhr.send();
+
+		xhr.onload = function() {
+			console.log("BEFORE");
+			var update = xhr.response;
+			console.log(update);
+			console.log("Change card");
+			document.getElementById(pos.id).src = selectedCard.src;
+			document.getElementById(pos.id).alt = "card";
+			document.getElementById(selectedCard.id).src = "Images/empty.png";
+			document.getElementById(selectedCard.id).alt = "empty";
+		}
+		
 	}
 
 	function endTurn(){
