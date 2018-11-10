@@ -3,15 +3,70 @@
 <html>
 <head>
 	<title>Game</title>
-	<link rel="stylesheet" href="styles.css">
+	<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 </head>
 
+<!-- Could not get the stylesheet to work when using localhost, so for now just copied straight in to html file-->
+<style>
+.container {
+    position: relative;
+    text-align: center;
+	color: white;
+}
+</style>
+<style>
+/* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+	transform: translate(-50%, -50%);
+	display: inline-block;
+}
+</style>
+
+<style>
+.card {
+	padding: 30px; 
+	background-color: rgb(0, 66, 107); 
+	display: inline-block;
+	font-size: 5pt;
+	height: 80px;
+	width: 40px;
+}
+</style>
+
+<style>
+.cardslot {
+	padding: 30px; 
+	background-color: #BCC6CC; 
+	display: inline-block;
+	font-size: 5pt;
+	height: 80px;
+	width: 40px;
+}
+</style>
+
+<style>
+.cardback {
+	padding: 30px; 
+	background-color: rgb(29, 39, 46); 
+	display: inline-block;
+	font-size: 5pt;
+	height: 80px;
+	width: 40px;
+}
+</style>
 
 <body>
-
+<!--
 <div class="container">
-	<img src="Images/cardback" alt="card" id="ophand1" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand2" style="width:5%;">
+	<div class="container">
+		<img src="Images/cardback" alt="card" id="ophand1" style="width:5%;">
+		<div class="centered">7</div></div>
+	<div class="container">
+		<img src="Images/cardback" alt="card" id="ophand2" style="width:5%;">
+		<div class="centered">7</div></div>
 	<img src="Images/cardback" alt="card" id="ophand3" style="width:5%;">
 	<img src="Images/cardback" alt="card" id="ophand4" style="width:5%;">
 	<img src="Images/cardback" alt="card" id="ophand5" style="width:5%;">
@@ -21,61 +76,62 @@
 	<img src="Images/cardback" alt="card" id="ophand9" style="width:5%;">
 	<img src="Images/cardback" alt="card" id="ophand10" style="width:5%;">
 </div> 
+-->
+
+<div class="cardback"></div>
+<div class="cardback"></div>
+<div class="cardback"></div>
+<div class="cardback"></div>
+<div class="cardback"></div>
+<div class="cardback"></div>
+<div class="cardback"></div>
+<div class="cardback"></div>
+<div class="cardback"></div>
+<div class="cardback"></div>
+
 <br><br>
 <!-- Opponent cards on board -->
-<div class="container">
-	<img src="Images/empty.png" alt="card" id="opboard9" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard8" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard7" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard6" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard5" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard4" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard3" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard2" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard1" style="width:6%;">
-	<img src="Images/empty.png" alt="card" id="opboard0" style="width:6%;">
-</div> 
+<div class="cardslot">CARD 1</div>
+<div class="cardslot">CARD 2</div>
+<div class="cardslot">CARD 3</div>
+<div class="cardslot">CARD 4</div>
+<div class="cardslot">CARD 5</div>
+<div class="cardslot">CARD 6</div>
+<div class="cardslot">CARD 7</div>
+<div class="cardslot">CARD 7</div>
+<div class="cardslot">CARD 9</div>
+<div class="cardslot">CARD 10</div>
 <br><br><br>
 
 <!-- Player cards on board -->
-<div class="container">
-	<div class="button">
-		<button id="lookForUpdatesBTN" onclick="lookForUpdates()">Look for updates!</button>
-	</div>
-	<br>
-	<div class="button">
-		<button id="drawCardBTN" onclick="drawCard()">Draw a card!</button>
-	</div>
-	<div class="button">
-			<button id="endTurnBTN" onclick="endTurn()">End turn!</button>
-	</div>
-	<img src="Images/empty.png" alt="empty" id="pboard0" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/empty.png" alt="empty" id="pboard1" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/empty.png" alt="empty" id="pboard2" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/empty.png" alt="empty" id="pboard3" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/empty.png" alt="empty" id="pboard4" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/empty.png" alt="empty" id="pboard5" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/empty.png" alt="empty" id="pboard6" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/empty.png" alt="empty" id="pboard7" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/empty.png" alt="empty" id="pboard8" onclick="playCard(this)" style="width:6%;">
-	<img src="Images/empty.png" alt="empty" id="pboard9" onclick="playCard(this)" style="width:6%;">
-</div> 
 
+<div class="cardslot">CARD 1</div>
+<div class="cardslot">CARD 2</div>
+<div class="cardslot">CARD 3</div>
+<div class="cardslot">CARD 4</div>
+<div class="cardslot">CARD 5</div>
+<div class="cardslot">CARD 6</div>
+<div class="cardslot">CARD 7</div>
+<div class="cardslot">CARD 7</div>
+<div class="cardslot">CARD 9</div>
+<div class="cardslot">CARD 10</div>
+<br>
+<button id="lookForUpdatesBTN" onclick="lookForUpdates()">Look for updates!</button>
+<button id="drawCardBTN" onclick="drawCard()">Draw a card!</button>
+<button id="endTurnBTN" onclick="endTurn()">End turn!</button>
 <br><br>
 <br>
 <!-- Player cards in hand -->
-<div class="container">
-	<img src="Images/card" alt="card" id="phand1" onclick="selectcard(this)" style="width:5%;">
-	<img src="Images/card" alt="card" id="phand2" onclick="selectcard(this)" style="width:5%;">
-	<img src="Images/card" alt="card" id="phand3" onclick="selectcard(this)" style="width:5%;">
-	<img src="Images/card" alt="card" id="phand4" onclick="selectcard(this)" style="width:5%;">
-	<img src="Images/card" alt="card" id="phand5" onclick="selectcard(this)" style="width:5%;">
-	<img src="Images/card" alt="card" id="phand6" onclick="selectcard(this)" style="width:5%;">
-	<img src="Images/card" alt="card" id="phand7" onclick="selectcard(this)" style="width:5%;">
-	<img src="Images/card" alt="card" id="phand8" onclick="selectcard(this)" style="width:5%;">
-	<img src="Images/card" alt="card" id="phand9" onclick="selectcard(this)" style="width:5%;">
-	<img src="Images/card" alt="card" id="phand10" onclick="selectcard(this)" style="width:5%;">
-</div> 
+<div class="card" id="phand0" onclick="selectcard(this)" alt="empty">CARD 1</div>
+<div class="card" id="phand1" onclick="selectcard(this)" alt="empty">CARD 2</div>
+<div class="card" id="phand2" onclick="selectcard(this)" alt="empty">CARD 3</div>
+<div class="card" id="phand3" onclick="selectcard(this)" alt="empty">CARD 4</div>
+<div class="card" id="phand4" onclick="selectcard(this)" alt="empty">CARD 5</div>
+<div class="card" id="phand5" onclick="selectcard(this)" alt="empty">CARD 6</div>
+<div class="card" id="phand6" onclick="selectcard(this)" alt="empty">CARD 7</div>
+<div class="card" id="phand7" onclick="selectcard(this)" alt="empty">CARD 8</div>
+<div class="card" id="phand8" onclick="selectcard(this)" alt="empty">CARD 9</div>
+<div class="card" id="phand9" onclick="selectcard(this)" alt="empty">CARD 10</div>
 
 
 
@@ -90,14 +146,15 @@
 
 
 	var selectedCard = "0"; //Handles the card that is currently selected.
+	var emptyHandPos = "0";
+	var playerHand = [];
 
 	function selectcard(card){
 		selectedCard = card;
 	}
 
 	function playCard(pos){
-		console.log(selectedCard.src);
-		console.log(pos.src);
+		
 		if (selectedCard.alt != "card" || pos.alt != "empty") {
 			console.log(true);
 			return;
@@ -137,10 +194,8 @@
 		xhr.send();
 		document.getElementById("EndTurnBTN").disabled = true;
 	}
-</script>
-	
-	<script type="text/javascript" id="APICallDrawCardFunc">
-		function drawCard() {
+
+	function drawCard() {
 			const gameId = sessionStorage.getItem("gameId");
 			const playerId = sessionStorage.getItem("playerId");
 			const url = `http://localhost:8080/drawCard/${gameId}/${playerId}`;
@@ -148,38 +203,42 @@
 			xhr.open("GET", url);
 			xhr.send();
 
-			
-			
-		}
-	</script>
-
-	<script type="text/javascript" id="APICallLookForUpdatesFunc">
-		function lookForUpdates() {
-			var gameId = sessionStorage.getItem("gameId");
-			const url = `http://localhost:8080/getGame/${gameId}`;
-			const xhr = new XMLHttpRequest();
-			xhr.open("GET", url);
-			xhr.send();
-			
 			xhr.onreadystatechange = processreq;
-
-
-
-			//Act on the data received from the request
-			function processreq(e) { 
+			function processreq(e) {
 				if (xhr.readyState == 4 && xhr.status == 200) {
-					const data =  JSON.parse(xhr.response);
-					console.log("Data from look for updates request at: " + url + ":\n" + data);
-					console.log("Player1: " + data.player1.deck[1].cost);
-					console.log("Player2: " + data[1]);
+					const data = JSON.parse(xhr.response);
+					playerHand.push(data);
+					var id = "phand" + emptyHandPos;
+					emptyHandPos++;
+					document.getElementById(id).innerHTML = data.name + '\nCost: ' + data.cost + "\nAttack: " + data.attack + "\nHealth: " + data.health;
 				}
 			}
-
-			//document.getElementById("opponentCard").innerHTML = "Your opponent has drawn: " +  "nothing yet because this function needs implementation ";
-			
 		}
+			
 		
-	</script>
+	function lookForUpdates() {
+		var gameId = sessionStorage.getItem("gameId");
+		const url = `http://localhost:8080/getGame/${gameId}`;
+		const xhr = new XMLHttpRequest();
+		xhr.open("GET", url);
+		xhr.send();
+		
+		xhr.onreadystatechange = processreq;
+		//Act on the data received from the request
+		function processreq(e) { 
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				const data =  JSON.parse(xhr.response);
+				console.log("Data from look for updates request at: " + url + ":\n" + data);
+				console.log("Player1: " + data.player1.deck[1].cost);
+				console.log("Player2: " + data[1]);
+			}
+		}
+
+		//document.getElementById("opponentCard").innerHTML = "Your opponent has drawn: " +  "nothing yet because this function needs implementation ";
+			
+	}
+</script>
+
 
 </body>
 </html>

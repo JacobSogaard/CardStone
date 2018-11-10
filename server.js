@@ -4,6 +4,7 @@ var app = express();
 app.set('view engine', 'ejs');  
 var path = require('path');
 var games = {};
+var fs = require('fs');
 
 //-----List all the implementing api methods------
 
@@ -14,6 +15,7 @@ app.get('/', function(request, response) {
 
 
 app.get('/InProgressGame', function(request, response) {
+
   response.sendFile(path.join(__dirname+'/InProgressGame.html'));
 });
 
@@ -88,3 +90,6 @@ app.get('/getGame/:gameId', function(request, response) {
   response.set("Content-Type", "text/json"); 
   response.end(JSON.stringify(gameState));
 });
+
+
+app.use('/Images', express.static(__dirname + '/Images'));
