@@ -14,6 +14,10 @@ exports.player2 = {
 
 exports.currentPlayer = 'p1';
 
+exports.getGame = function() {
+	return {player1: this.player1, player2: this.player2};
+};
+
 exports.endTurn = function() {
 	if (this.currentPlayer == 'p1') {
 		this.currentPlayer = 'p2';

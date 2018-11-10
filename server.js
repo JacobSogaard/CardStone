@@ -80,3 +80,11 @@ var server = app.listen(8080, function() {
 
   console.log("CardStone server listening at http://%s:%s", host, port);
 });
+
+
+app.get('/getGame/:gameId', function(request, response) {
+  var gameState = games[request.params.gameId].getGame();
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.set("Content-Type", "text/json"); 
+  response.end(JSON.stringify(gameState));
+});
