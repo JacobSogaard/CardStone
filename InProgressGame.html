@@ -10,7 +10,7 @@
 <body>
 
 <div class="container">
-	<img src="http://localhost:8080/Images/cardback" alt="card" id="ophand1" style="width:5%;">
+	<img src="~/Images/empty.png" alt="card" id="ophand1" style="width:5%;">
 	<img src="Images/cardback" alt="card" id="ophand2" style="width:5%;">
 	<img src="Images/cardback" alt="card" id="ophand3" style="width:5%;">
 	<img src="Images/cardback" alt="card" id="ophand4" style="width:5%;">
@@ -106,8 +106,8 @@
 		const gameId = sessionStorage.getItem("gameId");
 		const playerId = sessionStorage.getItem("playerId");
 		const boardId = pos.id;
-		const cardId = pos.src.substring(29, pos.src.length); //Stupid workaround to cardname from img source
-
+		//const cardId = pos.src.substring(29, pos.src.length); //Stupid workaround to cardname from img source
+		const cardId = 'card1';
 		console.log("Card" + cardId);
 
 		const url = `http://localhost:8080/playCard/${gameId}/${playerId}/${cardId}/${pos.id}`;
@@ -139,16 +139,14 @@
 	
 	<script type="text/javascript" id="APICallDrawCardFunc">
 		function drawCard() {
-			const url = 'http://localhost:8080/drawCard/1/1';
+			const gameId = sessionStorage.getItem("gameId");
+			const playerId = sessionStorage.getItem("playerId");
+			const url = `http://localhost:8080/drawCard/${gameId}/${playerId}`;
 			const xhr = new XMLHttpRequest();
 			xhr.open("GET", url);
 			xhr.send();
 
-			xhr.onload = function() {
-				var cardDrawn = JSON.parse(xhr.response);
-				console.log(cardDrawn);
-				document.getElementById("playerCard").innerHTML = "You have drawn:\n" + cardDrawn.name;
-			}
+			
 			
 		}
 	</script>

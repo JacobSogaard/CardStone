@@ -74,10 +74,13 @@ exports.attack = function(attacker, defender, attIndex, defIndex) {
 
 exports.playCard = function(playerName, cardToPlay, placeOnBoard) {
 	if (playerName == this.player1.name) {
+		console.log("Playername is player1");
 		for (var card in this.player1.hand) {
+			console.log("player1 loop");
 			if (card.id == cardToPlay.id) {
-				var cardPlayed = player1.hand.pop();
-				player1.board.splice(Number(placeOnBoard), 0, cardPlayed);
+				console.log("player 1 card id true");
+				var cardPlayed = this.player1.hand.pop();
+				this.player1.board.splice(Number(placeOnBoard), 0, cardPlayed);
 				return this.player1;
 			}
 		}
@@ -91,6 +94,8 @@ exports.playCard = function(playerName, cardToPlay, placeOnBoard) {
 			}
 		}
 	}
+
+	
 };
 
 exports.drawCard = function(playerName) {

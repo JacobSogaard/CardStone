@@ -50,11 +50,15 @@ app.get('/drawCard/:gameId/:playerId', function(request, response) {
   response.set("Content-Type", "text/json"); 
   response.end(JSON.stringify(cardDrawn));
 
-  console.log(theCard.name + " has been drawn");
+  console.log(cardDrawn.name + " has been drawn");
 });
 
 app.get('/playCard/:gameId/:playerId/:cardId/:placeOnBoard', function(request, response) {
   console.log("Playe card gameid: " + request.params.gameId);
+
+  console.log("Player: " + request.params.playerId);
+  console.log("Card: " + request.params.cardId);
+
   var gameUpdate = games[request.params.gameId].playCard(request.params.playerId, 
     request.params.cardId, request.params.placeOnBoard);
 
