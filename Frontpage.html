@@ -19,17 +19,16 @@
 <div align="center" class="content">
 		<h1> Frontpage </h1>
 
-<form>
-	<input type="text" id="gameId" placeholder="Your game id"/>
-	<input type="text" id="playerId" placeholder="Your player id"/>
+<form id="form1">
+	<input type="text" name="gameid" id="gameId" placeholder="Your game id"/>
+	<input type="text" name="playerid" id="playerId" placeholder="Your player id"/>
 </form>
-<br>
-<form action="http://localhost:8080/InProgressGame">
+<br><br>
 	<button onclick="join()" type="submit" id="joinBTN">Join</button>
-</form>
-	<br>	
-<form action="http://localhost:8080/InProgressGame">
-	<button onclick="create()" type="submit" id="createGame">Create</button>
+	<button onclick="create()" type="submit" id="createBTN">Create</button>
+	<br><br>
+	<form action="/InProgressGame">
+	<button onclick="start()" type="submit" id="startBTN" disabled>Start</button>
 </form>
 </div>
 
@@ -44,9 +43,11 @@ using a GET request to the server-->
 
 
 	function create() {
+		console.log("Create");
 		const playerId = document.getElementById("playerId").value;
 		const gameId = document.getElementById("gameId").value;
-
+		console.log(playerId);
+		console.log(gameId);
 		sessionStorage.setItem("gameId", gameId);
 		sessionStorage.setItem("playerId", playerId);
 				
@@ -55,6 +56,7 @@ using a GET request to the server-->
 		const xhr = new XMLHttpRequest();
 		xhr.response = 'html';
 		xhr.open("GET", url);
+		xhr.responseType = 'document';
 		xhr.send();
 
 		xhr.onreadystatechange = processreq;
@@ -64,9 +66,7 @@ using a GET request to the server-->
 		//Act on the data received from the request
 		function processreq(e) { 
 			if (xhr.readyState == 4 && xhr.status == 200) {
-				const data =  xhr.response;
-				console.log("Data from GET request at: " + url + ":\n" + JSON.stringify(data));
-				//document.getElementById("devTestCard").innerHTML = data.name;
+				document.getElementById("startBTN").disabled = false;
 			}
 		}
 	}
