@@ -80,10 +80,13 @@ exports.playCard = function(playerName, cardToPlay, placeOnBoard) {
 	if (playerName == this.player1.name) {
 		console.log("Playername is player1");
 		for (var card in this.player1.hand) {
-			console.log("player1 loop");
-			if (card.id == cardToPlay.id) {
+			//Change both name to id in if statement when figured out how to get ids from cards on board in InProgressGame
+			console.log("card to play: " + cardToPlay);
+			console.log("player hand id: " + this.player1.hand[card].id);
+			if (this.player1.hand[card].id == cardToPlay) {
 				console.log("player 1 card id true");
-				var cardPlayed = this.player1.hand.pop();
+				var cardPlayed = this.player1.hand[card];
+				this.player1.hand.splice(card, 1);
 				this.player1.board.splice(Number(placeOnBoard), 0, cardPlayed);
 				return this.player1;
 			}

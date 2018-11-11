@@ -37,6 +37,17 @@
 </style>
 
 <style>
+.emptycard {
+	padding: 30px; 
+	background-color: rgb(255, 255, 255); 
+	display: inline-block;
+	font-size: 5pt;
+	height: 80px;
+	width: 40px;
+}
+</style>
+
+<style>
 .cardslot {
 	padding: 30px; 
 	background-color: #BCC6CC; 
@@ -105,16 +116,16 @@
 
 <!-- Player cards on board -->
 
-<div class="cardslot">CARD 1</div>
-<div class="cardslot">CARD 2</div>
-<div class="cardslot">CARD 3</div>
-<div class="cardslot">CARD 4</div>
-<div class="cardslot">CARD 5</div>
-<div class="cardslot">CARD 6</div>
-<div class="cardslot">CARD 7</div>
-<div class="cardslot">CARD 7</div>
-<div class="cardslot">CARD 9</div>
-<div class="cardslot">CARD 10</div>
+<div class="cardslot" id="pboard0" onclick="playCard(this)" alt="empty">CARD 1</div>
+<div class="cardslot" id="pboard1" onclick="playCard(this)" alt="empty">CARD 2</div>
+<div class="cardslot" id="pboard2" onclick="playCard(this)" alt="empty">CARD 3</div>
+<div class="cardslot" id="pboard3" onclick="playCard(this)" alt="empty">CARD 4</div>
+<div class="cardslot" id="pboard4" onclick="playCard(this)" alt="empty">CARD 5</div>
+<div class="cardslot" id="pboard5" onclick="playCard(this)" alt="empty">CARD 6</div>
+<div class="cardslot" id="pboard6" onclick="playCard(this)" alt="empty">CARD 7</div>
+<div class="cardslot" id="pboard7" onclick="playCard(this)" alt="empty">CARD 7</div>
+<div class="cardslot" id="pboard8" onclick="playCard(this)" alt="empty">CARD 9</div>
+<div class="cardslot" id="pboard9" onclick="playCard(this)" alt="empty">CARD 10</div>
 <br>
 <button id="lookForUpdatesBTN" onclick="lookForUpdates()">Look for updates!</button>
 <button id="drawCardBTN" onclick="drawCard()">Draw a card!</button>
@@ -122,16 +133,16 @@
 <br><br>
 <br>
 <!-- Player cards in hand -->
-<div class="card" id="phand0" onclick="selectcard(this)" alt="empty">CARD 1</div>
-<div class="card" id="phand1" onclick="selectcard(this)" alt="empty">CARD 2</div>
-<div class="card" id="phand2" onclick="selectcard(this)" alt="empty">CARD 3</div>
-<div class="card" id="phand3" onclick="selectcard(this)" alt="empty">CARD 4</div>
-<div class="card" id="phand4" onclick="selectcard(this)" alt="empty">CARD 5</div>
-<div class="card" id="phand5" onclick="selectcard(this)" alt="empty">CARD 6</div>
-<div class="card" id="phand6" onclick="selectcard(this)" alt="empty">CARD 7</div>
-<div class="card" id="phand7" onclick="selectcard(this)" alt="empty">CARD 8</div>
-<div class="card" id="phand8" onclick="selectcard(this)" alt="empty">CARD 9</div>
-<div class="card" id="phand9" onclick="selectcard(this)" alt="empty">CARD 10</div>
+<div class="emptycard" id="phand0" onclick="selectcard(this)" alt="empty"></div>
+<div class="emptycard" id="phand1" onclick="selectcard(this)" alt="empty"></div>
+<div class="emptycard" id="phand2" onclick="selectcard(this)" alt="empty"></div>
+<div class="emptycard" id="phand3" onclick="selectcard(this)" alt="empty"></div>
+<div class="emptycard" id="phand4" onclick="selectcard(this)" alt="empty"></div>
+<div class="emptycard" id="phand5" onclick="selectcard(this)" alt="empty"></div>
+<div class="emptycard" id="phand6" onclick="selectcard(this)" alt="empty"></div>
+<div class="emptycard" id="phand7" onclick="selectcard(this)" alt="empty"></div>
+<div class="emptycard" id="phand8" onclick="selectcard(this)" alt="empty"></div>
+<div class="emptycard" id="phand9" onclick="selectcard(this)" alt="empty"></div>
 
 
 
@@ -154,35 +165,35 @@
 	}
 
 	function playCard(pos){
-		
-		if (selectedCard.alt != "card" || pos.alt != "empty") {
+		console.log(pos.className);
+		if (selectedCard.className != "card" || pos.className != "cardslot") {
 			console.log(true);
 			return;
 		}
 
 		const gameId = sessionStorage.getItem("gameId");
 		const playerId = sessionStorage.getItem("playerId");
-		const boardId = pos.id;
-		//const cardId = pos.src.substring(29, pos.src.length); //Stupid workaround to cardname from img source
-		const cardId = 'card1';
-		console.log("Card" + cardId);
+		const boardId = pos.id; //Doesn't work.. Could just get substring to strip away the pboard part of id
+		
+		//Problem getting card id from the div that the card is written in... Maybe JQuery?
+		
+		const id = selectedCard.id.substring(5,6);
+		const cardId = this.playerHand[Number(id)].id;
+		this.playerHand.splice(Number(id), 1);
+		
 
 		const url = `http://localhost:8080/playCard/${gameId}/${playerId}/${cardId}/${pos.id}`;
 		const xhr = new XMLHttpRequest();
 		xhr.open("GET", url);
 		xhr.send();
 
+		//Check that we actually get a valid response
 		xhr.onload = function() {
-			console.log("BEFORE");
-			var update = xhr.response;
-			console.log(update);
-			console.log("Change card");
-			//Card is actually played. Figure out how to show game from this xhr response
+			var update = JSON.parse(xhr.response);
+			document.getElementById(pos.id).className = "card";
+			document.getElementById(selectedCard.id).innerHTML = "";
+			updateBoard(update);
 
-			document.getElementById(pos.id).src = selectedCard.src;
-			document.getElementById(pos.id).alt = "card";
-			document.getElementById(selectedCard.id).src = "Images/empty.png";
-			document.getElementById(selectedCard.id).alt = "empty";
 		}
 		
 	}
@@ -198,6 +209,7 @@
 	function drawCard() {
 			const gameId = sessionStorage.getItem("gameId");
 			const playerId = sessionStorage.getItem("playerId");
+			//document.getElementById("drawCardBTN").disabled = true;  //Remove comment when update button works to avoid multiple carddraw!
 			const url = `http://localhost:8080/drawCard/${gameId}/${playerId}`;
 			const xhr = new XMLHttpRequest();
 			xhr.open("GET", url);
@@ -207,10 +219,14 @@
 			function processreq(e) {
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					const data = JSON.parse(xhr.response);
-					playerHand.push(data);
+					playerHand[emptyHandPos] = data;
 					var id = "phand" + emptyHandPos;
 					emptyHandPos++;
 					document.getElementById(id).innerHTML = data.name + '\nCost: ' + data.cost + "\nAttack: " + data.attack + "\nHealth: " + data.health;
+					//document.getElementById(id).alt = "card";
+					document.getElementById(id).className = "card";
+
+				
 				}
 			}
 		}
@@ -228,14 +244,36 @@
 		function processreq(e) { 
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				const data =  JSON.parse(xhr.response);
-				console.log("Data from look for updates request at: " + url + ":\n" + data);
-				console.log("Player1: " + data.player1.deck[1].cost);
-				console.log("Player2: " + data[1]);
 			}
 		}
 
 		//document.getElementById("opponentCard").innerHTML = "Your opponent has drawn: " +  "nothing yet because this function needs implementation ";
 			
+	}
+
+	//Function to update player board using xhr response after it has been json parsed
+	function updateBoard(data){
+		var hand = data.hand;
+		
+		var board = data.board;
+		var count = 0;
+		for (var card in hand) {
+			console.log("Hand: " + card);
+			document.getElementById("phand" + count).innerHTML = hand[card].name + '\nCost: ' + hand[card].cost 
+				+ "\nAttack: " + hand[card].attack + "\nHealth: " + hand[card].health;
+			count++;
+		}
+
+		document.getElementById("phand" + count).innerHTML = "";
+		document.getElementById("phand" + count).className = "emptyCard";
+		
+		count = 0;
+		for (var card in board) {
+			document.getElementById("pboard" + count).innerHTML = board[card].name + '\nCost: ' + board[card].cost 
+				+ "\nAttack: " + board[card].attack + "\nHealth: " + board[card].health;
+			count++;
+		}
+
 	}
 </script>
 

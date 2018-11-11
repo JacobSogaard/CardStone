@@ -60,7 +60,8 @@ app.get('/playCard/:gameId/:playerId/:cardId/:placeOnBoard', function(request, r
 
   console.log("Player: " + request.params.playerId);
   console.log("Card: " + request.params.cardId);
-
+  console.log("GameId: " + request.params.gameId);
+  console.log("Game: " + games[request.params.gameId]);
   var gameUpdate = games[request.params.gameId].playCard(request.params.playerId, 
     request.params.cardId, request.params.placeOnBoard);
 
