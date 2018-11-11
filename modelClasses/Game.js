@@ -14,13 +14,17 @@ exports.player2 = {
 
 exports.currentPlayer = 'p1';
 
+exports.getGame = function() {
+	return {player1: this.player1, player2: this.player2};
+};
+
 exports.endTurn = function() {
 	if (this.currentPlayer == 'p1') {
 		this.currentPlayer = 'p2';
 	} else {
 		this.currentPlayer = 'p1'; 
 	}
-}
+};
 
 
 exports.create = function(playerName) {
@@ -29,7 +33,7 @@ exports.create = function(playerName) {
 	//this.player1.setName(playerName);
 	this.player1.name = playerName;
 	this.setDeck('player1');
-}
+};
 
 exports.join = function(playerName) {
 	console.log("Join call: " + playerName);
@@ -37,7 +41,7 @@ exports.join = function(playerName) {
 	//this.player2.setName(playerName);
 	this.player2.name = playerName;
 	this.setDeck('player2');
-}
+};
 
 exports.attack = function(attacker, defender, attIndex, defIndex) {
 	var attHealth = attacker.health - defender.attack;
@@ -70,14 +74,20 @@ exports.attack = function(attacker, defender, attIndex, defIndex) {
 			this.player1.board[Number(defIndex)].health = defHealth;
 		}
 	}
-}
+};
 
 exports.playCard = function(playerName, cardToPlay, placeOnBoard) {
 	if (playerName == this.player1.name) {
+		console.log("Playername is player1");
 		for (var card in this.player1.hand) {
-			if (card.id == cardToPlay.id) {
-				var cardPlayed = player1.hand.pop();
-				player1.board.splice(Number(placeOnBoard), 0, cardPlayed);
+			//Change both name to id in if statement when figured out how to get ids from cards on board in InProgressGame
+			console.log("card to play: " + cardToPlay);
+			console.log("player hand id: " + this.player1.hand[card].id);
+			if (this.player1.hand[card].id == cardToPlay) {
+				console.log("player 1 card id true");
+				var cardPlayed = this.player1.hand[card];
+				this.player1.hand.splice(card, 1);
+				this.player1.board.splice(Number(placeOnBoard), 0, cardPlayed);
 				return this.player1;
 			}
 		}
@@ -91,7 +101,9 @@ exports.playCard = function(playerName, cardToPlay, placeOnBoard) {
 			}
 		}
 	}
-}
+
+	
+};
 
 exports.drawCard = function(playerName) {
 	var cardDrawn;
@@ -106,7 +118,7 @@ exports.drawCard = function(playerName) {
 	}
 
 	return cardDrawn;
-}
+};
 
 exports.setDeck = function(thePlayer) {
 	var fs = require('fs');
@@ -126,6 +138,6 @@ exports.setDeck = function(thePlayer) {
 			this.player2.deck.push(tempCard);
 		}
 	}
-}
+};
 
 

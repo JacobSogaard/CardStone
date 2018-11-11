@@ -4,6 +4,7 @@ var app = express();
 app.set('view engine', 'ejs');  
 var path = require('path');
 var games = {};
+var fs = require('fs');
 
 //-----List all the implementing api methods------
 
@@ -14,6 +15,7 @@ app.get('/', function(request, response) {
 
 
 app.get('/InProgressGame', function(request, response) {
+
   response.sendFile(path.join(__dirname+'/InProgressGame.html'));
 });
 
@@ -28,15 +30,14 @@ app.get('/joinGame/:gameId/:playerId', function(request, response) {
 });
 
 app.get('/createGame/:gameId/:playerId', function(request, response) {
+  console.log("CREATE GAME");
   var game = require('./modelClasses/Game');
 
   var playerName = request.params.playerId;
   game.create(playerName);
 
-
-  //console.log(game);
   games[request.params.gameId] = game;
-  
+
   response.sendFile(path.join(__dirname+'/InProgressGame.html'));
 
 });
@@ -51,11 +52,18 @@ app.get('/drawCard/:gameId/:playerId', function(request, response) {
   response.set("Content-Type", "text/json"); 
   response.end(JSON.stringify(cardDrawn));
 
-  console.log(theCard.name + " has been drawn");
+  console.log(cardDrawn.name + " has been drawn");
 });
 
 app.get('/playCard/:gameId/:playerId/:cardId/:placeOnBoard', function(request, response) {
-  var gameUpdate = games[request.params.gameId].playCard(params.playerId, params.cardId, placeOnBoard);
+  console.log("Playe card gameid: " + request.params.gameId);
+
+  console.log("Player: " + request.params.playerId);
+  console.log("Card: " + request.params.cardId);
+  console.log("GameId: " + request.params.gameId);
+  console.log("Game: " + games[request.params.gameId]);
+  var gameUpdate = games[request.params.gameId].playCard(request.params.playerId, 
+    request.params.cardId, request.params.placeOnBoard);
 
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.set("Content-Type", "text/json"); 
@@ -75,3 +83,14 @@ var server = app.listen(8080, function() {
 
   console.log("CardStone server listening at http://%s:%s", host, port);
 });
+
+
+app.get('/getGame/:gameId', function(request, response) {
+  var gameState = games[request.params.gameId].getGame();
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.set("Content-Type", "text/json"); 
+  response.end(JSON.stringify(gameState));
+});
+
+
+app.use('/Images', express.static(__dirname + '/Images'));
