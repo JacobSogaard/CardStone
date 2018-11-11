@@ -2,27 +2,35 @@ exports.player1 = {
 	name: "",
 	deck: [],
 	hand: [],
-	board: []
+	board: [0,0,0,0,0,0,0,0,0,0],
+	currentMana: 0,
+	totalMana: 1
 };
 
 exports.player2 = {
 	name: "",
 	deck: [],
 	hand: [],
-	board: []
+	board: [0,0,0,0,0,0,0,0,0,0],
+	currentMana: 0,
+	totalMana: 1
 };
 
 exports.currentPlayer = 'p1';
 
 exports.getGame = function() {
-	return {player1: this.player1, player2: this.player2};
+	return {"player1": this.player1, "player2": this.player2};
 };
 
 exports.endTurn = function() {
 	if (this.currentPlayer == 'p1') {
 		this.currentPlayer = 'p2';
+		this.player2.totalMana++;
+		this.player2.currentMana = this.player2.totalMana;
 	} else {
 		this.currentPlayer = 'p1'; 
+		this.player1.totalMana++;
+		this.player1.currentMana = this.player1.totalMana;
 	}
 };
 
@@ -32,7 +40,7 @@ exports.create = function(playerName) {
 	//this.player1 = require('./Player');
 	//this.player1.setName(playerName);
 	this.player1.name = playerName;
-	this.setDeck('player1');
+	this.setDeck('player1', 0);
 };
 
 exports.join = function(playerName) {
@@ -40,63 +48,87 @@ exports.join = function(playerName) {
 	//this.player2 = require('./Player');
 	//this.player2.setName(playerName);
 	this.player2.name = playerName;
-	this.setDeck('player2');
+	this.setDeck('player2', 31);
 };
 
-exports.attack = function(attacker, defender, attIndex, defIndex) {
-	var attHealth = attacker.health - defender.attack;
-	var defHealth = defender.health - attacker.attack;
+exports.attack = function(playerName, attIndex, defIndex) {
+	if (!(playerName == this.player1.name && this.currentPlayer == 'p1') ||
+		!(playerName == this.player2.name && this.currentPlayer == 'p2') ) {
+		return this.getGame();
+	}
 
 	if (this.currentPlayer == 'p1') {
+		var attacker = this.player1.board[attIndex];
+		var defender = this.player2.board[defIndex];
+
+		attacker.health = attacker.health - defender.attack;
+		defender.health = defender.health - attacker.attack;
+
 		if (attHealth < 1) {
-			this.player1.board.splice(Number(attIndex), 1); //Remove if dead
+			this.player1.board.splice(attIndex, 1); // Remove if dead
 		} else {
-			this.player1.board[Number(attIndex)].health = attHealth;
+			this.player1.board[attIndex] = attacker;
 		}
 
-		if (defHealth < 1) {
-			this.player2.board.splice(Number(defIndex), 1);
+		if (defHealth < 1 ) {
+			this.player2.board.splice(defIndex, 1);
 		} else {
-			this.player2.board[Number(defIndex)].health = defHealth;
+			this.player2.board[defIndex] = defender;
 		}
 	}
-
 	if (this.currentPlayer == 'p2') {
+		var attacker = this.player2.board[attIndex];
+		var defender = this.player1.board[defIndex];
+
+		attacker.health = attacker.health - defender.attack;
+		defender.health = defender.health - attacker.attack;
+
 		if (attHealth < 1) {
-			this.player2.board.splice(Number(attIndex), 1); //Remove if dead
+			this.player2.board.splice(attIndex, 1); // Remove if dead
 		} else {
-			this.player2.board[Number(attIndex)].health = attHealth;
+			this.player2.board[attIndex] = attacker;
 		}
-		
-		if (defHealth < 1) {
-			this.player1.board.splice(Number(defIndex), 1);
+
+		if (defHealth < 1 ) {
+			this.player1.board.splice(defIndex, 1);
 		} else {
-			this.player1.board[Number(defIndex)].health = defHealth;
+			this.player1.board[defIndex] = defender;
 		}
 	}
+
+
+	return this.getGame();
 };
 
-exports.playCard = function(playerName, cardToPlay, placeOnBoard) {
-	if (playerName == this.player1.name) {
-		console.log("Playername is player1");
+exports.playCard = function(playerName, cardToPlayId, boardIndex) {
+	if (playerName == this.player1.name %% this.currentPlayer == 'p1') {
 		for (var card in this.player1.hand) {
-			//Change both name to id in if statement when figured out how to get ids from cards on board in InProgressGame
-			console.log("card to play: " + cardToPlay);
-			console.log("player hand id: " + this.player1.hand[card].id);
-			if (this.player1.hand[card].id == cardToPlay) {
-				console.log("player 1 card id true");
+			if (this.player1.hand[card].id == cardToPlayId) {
+				//break out if card is too expensive to  play
+				if (this.player1.hand[card].cost > this.player1.currentMana) {
+					break;
+				}
+
 				var cardPlayed = this.player1.hand[card];
 				this.player1.hand.splice(card, 1);
-				this.player1.board.splice(Number(placeOnBoard), 0, cardPlayed);
+				this.player1.board.splice(Number(boardIndex), 0, cardPlayed);
+				this.player1.currentMana = this.player1.currentMana - cardPlayed.cost;
 				return this.player1;
 			}
 		}
 
-	} else if (playerName == this.player2.name) {
+	} else if (playerName == this.player2.name && this.currentPlayer == 'p2') {
 		for (var card in this.player2.hand) {
-			if (card.id == cardToPlay.id) {
-				var cardPlayed = player2.hand.pop();
-				player2.board.splice(Number(placeOnBoard), 0, cardPlayed);
+			if (this.player2.hand[card].id == cardToPlayId) {
+				//break out if card is too expensive to  play
+				if (this.player2.hand[card].cost > this.player2.currentMana) {
+					break;
+				}
+
+				var cardPlayed = this.player2.hand[card];
+				this.player2.hand.splice(card, 1);
+				this.player2.board.splice(Number(boardIndex), 0, cardPlayed);
+				this.player2.currentMana = this.player2.currentMana - cardPlayed.cost;
 				return this.player2;
 			}
 		}
@@ -106,13 +138,13 @@ exports.playCard = function(playerName, cardToPlay, placeOnBoard) {
 };
 
 exports.drawCard = function(playerName) {
-	var cardDrawn;
+	var cardDrawn = {"id" : "-1"}; //dummy card if deck is empty or hand is too full
 
-	if (playerName == this.player1.name) {
+	if (playerName == this.player1.name && this.currentPlayer == 'p1' && this.player1.deck.length > 0 && this.player1.hand.length < 10) {
 		cardDrawn = this.player1.deck.pop();
 		this.player1.hand.push(cardDrawn);
 
-	} else if (playerName == this.player2.name) {
+	} else if (playerName == this.player2.name && this.currentPlayer == 'p2' && this.player2.deck.length > 0 && this.player2.hand.length < 10) {
 		cardDrawn = this.player2.deck.pop();
 		this.player2.hand.push(cardDrawn);
 	}
@@ -120,7 +152,7 @@ exports.drawCard = function(playerName) {
 	return cardDrawn;
 };
 
-exports.setDeck = function(thePlayer) {
+exports.setDeck = function(thePlayer, idAdder) {
 	var fs = require('fs');
 	var deck = require('./Deck');
 	var playerDeck = deck.getDeck('deck1');
@@ -130,7 +162,7 @@ exports.setDeck = function(thePlayer) {
 		var tempCardString = './cards/' + playerDeck.deckList[i] + '.json'; //filePath
 		var tempCardRaw = fs.readFileSync(tempCardString); //some raw data 
 		var tempCard = JSON.parse(tempCardRaw); //card as json
-		tempCard.id = String(i);
+		tempCard.id = String(i + idAdder);
 
 		if (thePlayer == 'player1') {
 			this.player1.deck.push(tempCard);

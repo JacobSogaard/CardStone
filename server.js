@@ -73,6 +73,18 @@ app.get('/playCard/:gameId/:playerId/:cardId/:placeOnBoard', function(request, r
 
 });
 
+app.get('/targetCard/:gameId/:playerId/:targetingCardIndex/:targetedCardIndex', function(request, response)  {
+  var theGame = request.params.gameId;
+  var thePlayer = request.params.playerId;
+  var targetingCard = Number(request.params.targetingCardIndex);
+  var targetedCard = Number(request.params.targetedCardIndex);
+
+  var updatedPlayers = games[theGame].attack(thePlayer, targetingCard, targetedCard);
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.set("Content-Type", "text/json");
+  response.end(JSON.stringify(updatedPlayers));
+});
+
 app.get('/endTurn/:gameId', function(request, response) {
   games[request.params.gameId].endTurn();
 });
