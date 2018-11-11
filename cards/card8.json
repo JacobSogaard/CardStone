@@ -4,5 +4,6 @@
 	"attack": 6,
 	"health": 4,
 	"text": "Them other dragons got nothin' on him",
-	"effects": []
+	"effects": [],
+	"id": ""
 }

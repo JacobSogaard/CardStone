@@ -4,5 +4,6 @@
 	"attack": 1,
 	"health": 5,
 	"text": "Jacob likes this",
-	"effects": []
+	"effects": [],
+	"id": ""
 }
