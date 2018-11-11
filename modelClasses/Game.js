@@ -101,7 +101,7 @@ exports.attack = function(playerName, attIndex, defIndex) {
 };
 
 exports.playCard = function(playerName, cardToPlayId, boardIndex) {
-	if (playerName == this.player1.name %% this.currentPlayer == 'p1') {
+	if (playerName == this.player1.name && this.currentPlayer == 'p1') {
 		for (var card in this.player1.hand) {
 			if (this.player1.hand[card].id == cardToPlayId) {
 				//break out if card is too expensive to  play
