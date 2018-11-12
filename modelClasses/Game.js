@@ -17,9 +17,13 @@ exports.player2 = {
 };
 
 exports.currentPlayer = 'p1';
+var hasUpdated = false;
 
 exports.getGame = function() {
-	return {player1: this.player1, player2: this.player2};
+	const game = {player1: this.player1, player2: this.player2, updated: hasUpdated};
+	this.hasUpdated = false;
+	return game;
+
 };
 
 exports.endTurn = function() {
@@ -32,6 +36,8 @@ exports.endTurn = function() {
 		this.player1.totalMana++;
 		this.player1.currentMana = this.player1.totalMana;
 	}
+	hasUpdated = true;
+	console.log("Current player end turn: " + this.currentPlayer);
 };
 
 

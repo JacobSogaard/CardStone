@@ -59,12 +59,7 @@ app.get('/drawCard/:gameId/:playerId', function(request, response) {
 });
 
 app.get('/playCard/:gameId/:playerId/:cardId/:placeOnBoard', function(request, response) {
-  console.log("Playe card gameid: " + request.params.gameId);
 
-  console.log("Player: " + request.params.playerId);
-  console.log("Card: " + request.params.cardId);
-  console.log("GameId: " + request.params.gameId);
-  console.log("Game: " + games[request.params.gameId]);
   var gameUpdate = games[request.params.gameId].playCard(request.params.playerId, 
     request.params.cardId, request.params.placeOnBoard);
 
@@ -86,7 +81,8 @@ app.get('/targetCard/:gameId/:playerId/:targetingCardIndex/:targetedCardIndex', 
   response.end(JSON.stringify(updatedPlayers));
 });
 
-app.get('/endTurn/:gameId', function(request, response) {
+app.put('/endTurn/:gameId', function(request, response) {
+  console.log("End turn server");
   games[request.params.gameId].endTurn();
 });
 
@@ -99,7 +95,6 @@ var server = app.listen(8080, function() {
 
 
 app.get('/getGame/:gameId', function(request, response) {
-  console.log("Get game id: " + request.params.gameId);
   var gameState = games[request.params.gameId].getGame();
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.set("Content-Type", "text/json"); 

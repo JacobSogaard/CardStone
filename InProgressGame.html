@@ -213,11 +213,12 @@
 	}
 
 	function endTurn(){
-		const url = 'http://localhost:8080/endTurn/';
+		const gameId = sessionStorage.getItem("gameId");
+		const url = `http://localhost:8080/endTurn/${gameId}`;
 		const xhr = new XMLHttpRequest();
 		xhr.open("PUT", url);
 		xhr.send();
-		document.getElementById("EndTurnBTN").disabled = true;
+		document.getElementById("endTurnBTN").disabled = true;
 	}
 
 	function drawCard() {
@@ -258,23 +259,28 @@
 		function processreq(e) { 
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				const data =  JSON.parse(xhr.response);
-				if (data.player1.name == sessionStorage.getItem("playerId")){ 
-					var board = data.player2.board;
-				} else {
-					var board = data.player1.board;
-				}
-				
-				//var board = data.board;
-				console.log("Look for updates board: " + board);
-				count = 0;
-				for (var card in board) {
-					if (board[card] != 0) {
-						document.getElementById("oboard" + count).innerHTML = board[card].name + '\nCost: ' + board[card].cost 
-							+ "\nAttack: " + board[card].attack + "\nHealth: " + board[card].health;
-						document.getElementById("oboard" + count).className = "card";
+				console.log("Has updated: " + data.updated);
+				if (data.updated) {
+
+					if (data.player1.name == sessionStorage.getItem("playerId")){ 
+						var board = data.player2.board;
+					} else {
+						var board = data.player1.board;
 					}
-					count++;
-				}
+					
+					//var board = data.board;
+					count = 0;
+					for (var card in board) {
+						if (board[card] != 0) {
+							document.getElementById("oboard" + count).innerHTML = board[card].name + '\nCost: ' + board[card].cost 
+								+ "\nAttack: " + board[card].attack + "\nHealth: " + board[card].health;
+							document.getElementById("oboard" + count).className = "card";
+						}
+						count++;
+					}
+					
+					document.getElementById("endTurnBTN").disabled = false;
+			}
 			}
 		}
 		//document.getElementById("opponentCard").innerHTML = "Your opponent has drawn: " +  "nothing yet because this function needs implementation ";
