@@ -127,21 +127,20 @@
 
 <!-- Player cards on board -->
 
-<div class="cardslot" id="pboard0" onclick="playCard(this)">CARD 1</div>
-<div class="cardslot" id="pboard1" onclick="playCard(this)">CARD 2</div>
-<div class="cardslot" id="pboard2" onclick="playCard(this)">CARD 3</div>
-<div class="cardslot" id="pboard3" onclick="playCard(this)">CARD 4</div>
-<div class="cardslot" id="pboard4" onclick="playCard(this)">CARD 5</div>
-<div class="cardslot" id="pboard5" onclick="playCard(this)">CARD 6</div>
-<div class="cardslot" id="pboard6" onclick="playCard(this)">CARD 7</div>
-<div class="cardslot" id="pboard7" onclick="playCard(this)">CARD 7</div>
-<div class="cardslot" id="pboard8" onclick="playCard(this)">CARD 9</div>
-<div class="cardslot" id="pboard9" onclick="playCard(this)">CARD 10</div>
+<div class="cardslot" id="pboard0" onclick="playCard(this)"></div>
+<div class="cardslot" id="pboard1" onclick="playCard(this)"></div>
+<div class="cardslot" id="pboard2" onclick="playCard(this)"></div>
+<div class="cardslot" id="pboard3" onclick="playCard(this)"></div>
+<div class="cardslot" id="pboard4" onclick="playCard(this)"></div>
+<div class="cardslot" id="pboard5" onclick="playCard(this)"></div>
+<div class="cardslot" id="pboard6" onclick="playCard(this)"></div>
+<div class="cardslot" id="pboard7" onclick="playCard(this)"></div>
+<div class="cardslot" id="pboard8" onclick="playCard(this)"></div>
+<div class="cardslot" id="pboard9" onclick="playCard(this)"></div>
 <br>
 <button id="lookForUpdatesBTN" onclick="lookForUpdates()">Look for updates!</button>
 <button id="drawCardBTN" onclick="drawCard()">Draw a card!</button>
 <button id="endTurnBTN" onclick="endTurn()">End turn!</button>
-<br><br>
 <br>
 <!-- Player cards in hand -->
 <div class="emptycard" id="phand0" onclick="selectcard(this)"></div>
@@ -179,6 +178,10 @@
 	function playCard(pos){
 		console.log(pos.className);
 		if (selectedCardHand.className != "card" || pos.className != "cardslot") {
+			if (pos.className == "card") {
+				document.getElementById(pos.id).className = "selectedcard";
+				selectedCardBoard = pos;
+			}
 			console.log(true);
 			return;
 		}
@@ -188,11 +191,6 @@
 		const boardId = pos.id.substring(6); //Doesn't work.. Could just get substring to strip away the pboard part of id
 		
 		//Problem getting card id from the div that the card is written in... Maybe JQuery?
-
-		if (pos.className == "card") {
-			document.getElementById(pos.id).className = "selectedcard";
-			selectedCardBoard = pos;
-		}
 
 		const id = selectedCardHand.id.substring(5,6);
 		const cardId = this.playerHand[Number(id)].id;
@@ -280,7 +278,7 @@
 	function updateBoard(data){
 		var hand = data.hand;
 		var board = data.board;
-
+		
 		var count = 0;
 		for (var card in hand) {
 				console.log("Hand: " + card);
@@ -293,11 +291,15 @@
 		document.getElementById("phand" + count).innerHTML = "";
 		document.getElementById("phand" + count).className = "emptyCard";
 		
+		for (var i = 0; i < 10; i++) {
+			document.getElementById("pboard" + i).innerHTML = "";
+		}
+
 		count = 0;
-		for (var card in board) {
-			if (board[card] != 0) {
-				document.getElementById("pboard" + count).innerHTML = board[card].name + '\nCost: ' + board[card].cost 
-					+ "\nAttack: " + board[card].attack + "\nHealth: " + board[card].health;
+		for (var bcard in board) {
+			if (board[bcard] != 0) {
+				document.getElementById("pboard" + count).innerHTML = "<br /><br />" + board[bcard].name + '\nCost: ' + board[bcard].cost 
+					+ "\nAttack: " + board[bcard].attack + "\nHealth: " + board[bcard].health;
 			}
 			count++;
 		}

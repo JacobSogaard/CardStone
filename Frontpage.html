@@ -77,10 +77,17 @@ using a GET request to the server-->
 		const targetUrl = 'joinGame/' + gameId.value + "/" + playerId.value;
 		const url = 'http://localhost:8080/' + targetUrl;
 		const xhr = new XMLHttpRequest();
-		xhr.response = 'json';
+		xhr.response = 'html';
 		xhr.open("GET", url);
 		xhr.send();
+		
+		xhr.onreadystatechange = processreq;
 
+		function processreq(e) {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				document.getElementById("startBTN").disabled = false;
+			}
+		}
 
 	}
 	

@@ -21,10 +21,16 @@ app.get('/InProgressGame', function(request, response) {
 
 app.get('/joinGame/:gameId/:playerId', function(request, response) {
 
-  var game = games[request.params.gameId];
-  game.join(request.params.playerId);
 
-  response.sendFile(path.join(__dirname+'/InProgressGame.html'));
+  if (typeof games[request.params.gameId] !== 'undefined') { 
+    console.log("type of true");
+    var game = games[request.params.gameId];
+    game.join(request.params.playerId);
+    response.sendFile(path.join(__dirname+'/InProgressGame.html'));
+  }
+
+  
+
 });
 
 app.get('/createGame/:gameId/:playerId', function(request, response) {
