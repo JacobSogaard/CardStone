@@ -110,7 +110,7 @@ exports.playCard = function(playerName, cardToPlayId, boardIndex) {
 				}
 				var cardPlayed = this.player1.hand[card];
 				this.player1.hand.splice(card, 1);
-				this.player1.board.splice(Number(boardIndex), 0, cardPlayed);
+				this.player1.board[boardIndex] = this.player1.hand[card];
 				console.log("boardIndex: " + boardIndex);
 				console.log(this.player1.board);
 				this.player1.currentMana = this.player1.currentMana - cardPlayed.cost;
@@ -128,7 +128,7 @@ exports.playCard = function(playerName, cardToPlayId, boardIndex) {
 
 				var cardPlayed = this.player2.hand[card];
 				this.player2.hand.splice(card, 1);
-				this.player2.board.splice(Number(boardIndex), 0, cardPlayed);
+				this.player2.board[boardIndex] = this.player1.hand[card];
 				this.player2.currentMana = this.player2.currentMana - cardPlayed.cost;
 				return this.player2;
 			}
