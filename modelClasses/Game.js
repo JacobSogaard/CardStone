@@ -106,12 +106,13 @@ exports.playCard = function(playerName, cardToPlayId, boardIndex) {
 			if (this.player1.hand[card].id == cardToPlayId) {
 				//break out if card is too expensive to  play
 				if (this.player1.hand[card].cost > this.player1.currentMana) {
-					break;
+					//break;
 				}
-
 				var cardPlayed = this.player1.hand[card];
 				this.player1.hand.splice(card, 1);
 				this.player1.board.splice(Number(boardIndex), 0, cardPlayed);
+				console.log("boardIndex: " + boardIndex);
+				console.log(this.player1.board);
 				this.player1.currentMana = this.player1.currentMana - cardPlayed.cost;
 				return this.player1;
 			}
@@ -122,7 +123,7 @@ exports.playCard = function(playerName, cardToPlayId, boardIndex) {
 			if (this.player2.hand[card].id == cardToPlayId) {
 				//break out if card is too expensive to  play
 				if (this.player2.hand[card].cost > this.player2.currentMana) {
-					break;
+					//break;
 				}
 
 				var cardPlayed = this.player2.hand[card];

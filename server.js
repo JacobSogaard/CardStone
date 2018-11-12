@@ -23,8 +23,6 @@ app.get('/joinGame/:gameId/:playerId', function(request, response) {
 
   var game = games[request.params.gameId];
   game.join(request.params.playerId);
-  console.log("This is game after joining: ");
-  console.log(game);
 
   response.sendFile(path.join(__dirname+'/InProgressGame.html'));
 });
@@ -68,8 +66,6 @@ app.get('/playCard/:gameId/:playerId/:cardId/:placeOnBoard', function(request, r
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.set("Content-Type", "text/json"); 
   response.end(JSON.stringify(gameUpdate));
-
-  console.log("Updated game after playing a card: " + JSON.stringify(gameUpdate));
 
 });
 

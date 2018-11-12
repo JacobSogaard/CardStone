@@ -185,7 +185,7 @@
 
 		const gameId = sessionStorage.getItem("gameId");
 		const playerId = sessionStorage.getItem("playerId");
-		const boardId = pos.id; //Doesn't work.. Could just get substring to strip away the pboard part of id
+		const boardId = pos.id.substring(6); //Doesn't work.. Could just get substring to strip away the pboard part of id
 		
 		//Problem getting card id from the div that the card is written in... Maybe JQuery?
 
@@ -199,7 +199,7 @@
 		this.playerHand.splice(Number(id), 1);
 		emptyHandPos--;
 
-		const url = `http://localhost:8080/playCard/${gameId}/${playerId}/${cardId}/${pos.id}`;
+		const url = `http://localhost:8080/playCard/${gameId}/${playerId}/${cardId}/${boardId}`;
 		const xhr = new XMLHttpRequest();
 		xhr.open("GET", url);
 		xhr.send();
