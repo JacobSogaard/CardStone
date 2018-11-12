@@ -85,6 +85,8 @@ using a GET request to the server-->
 
 		function processreq(e) {
 			if (xhr.readyState == 4 && xhr.status == 200) {
+				sessionStorage.setItem("gameId", gameId.value);
+				sessionStorage.setItem("playerId", playerId.value);
 				document.getElementById("startBTN").disabled = false;
 			}
 		}

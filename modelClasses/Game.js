@@ -19,7 +19,7 @@ exports.player2 = {
 exports.currentPlayer = 'p1';
 
 exports.getGame = function() {
-	return {"player1": this.player1, "player2": this.player2};
+	return {player1: this.player1, player2: this.player2};
 };
 
 exports.endTurn = function() {
@@ -48,7 +48,7 @@ exports.join = function(playerName) {
 	//this.player2 = require('./Player');
 	//this.player2.setName(playerName);
 	this.player2.name = playerName;
-	this.setDeck('player2', 31);
+	this.setDeck('player2', 0);
 };
 
 exports.attack = function(playerName, attIndex, defIndex) {

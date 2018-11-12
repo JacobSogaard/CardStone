@@ -23,7 +23,6 @@ app.get('/joinGame/:gameId/:playerId', function(request, response) {
 
 
   if (typeof games[request.params.gameId] !== 'undefined') { 
-    console.log("type of true");
     var game = games[request.params.gameId];
     game.join(request.params.playerId);
     response.sendFile(path.join(__dirname+'/InProgressGame.html'));
@@ -100,6 +99,7 @@ var server = app.listen(8080, function() {
 
 
 app.get('/getGame/:gameId', function(request, response) {
+  console.log("Get game id: " + request.params.gameId);
   var gameState = games[request.params.gameId].getGame();
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.set("Content-Type", "text/json"); 
