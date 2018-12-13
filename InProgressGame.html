@@ -106,10 +106,6 @@
 <div class="cardback"></div>
 <div class="cardback"></div>
 <div class="cardback"></div>
-<div class="cardback"></div>
-<div class="cardback"></div>
-<div class="cardback"></div>
-<div class="cardback"></div>
 
 <br><br>
 <!-- Opponent cards on board -->
@@ -119,10 +115,6 @@
 <div class="cardslot" id="oboard3" onclick="target(this)">CARD 4</div>
 <div class="cardslot" id="oboard4" onclick="target(this)">CARD 5</div>
 <div class="cardslot" id="oboard5" onclick="target(this)">CARD 6</div>
-<div class="cardslot" id="oboard6" onclick="target(this)">CARD 7</div>
-<div class="cardslot" id="oboard7" onclick="target(this)">CARD 7</div>
-<div class="cardslot" id="oboard8" onclick="target(this)">CARD 9</div>
-<div class="cardslot" id="oboard9" onclick="target(this)">CARD 10</div>
 <br><br><br>
 
 <!-- Player cards on board -->
@@ -133,10 +125,6 @@
 <div class="cardslot" id="pboard3" onclick="playCard(this)"></div>
 <div class="cardslot" id="pboard4" onclick="playCard(this)"></div>
 <div class="cardslot" id="pboard5" onclick="playCard(this)"></div>
-<div class="cardslot" id="pboard6" onclick="playCard(this)"></div>
-<div class="cardslot" id="pboard7" onclick="playCard(this)"></div>
-<div class="cardslot" id="pboard8" onclick="playCard(this)"></div>
-<div class="cardslot" id="pboard9" onclick="playCard(this)"></div>
 <br>
 <button id="lookForUpdatesBTN" onclick="lookForUpdates()">Look for updates!</button>
 <button id="drawCardBTN" onclick="drawCard()">Draw a card!</button>
@@ -149,22 +137,8 @@
 <div class="emptycard" id="phand3" onclick="selectcard(this)"></div>
 <div class="emptycard" id="phand4" onclick="selectcard(this)"></div>
 <div class="emptycard" id="phand5" onclick="selectcard(this)"></div>
-<div class="emptycard" id="phand6" onclick="selectcard(this)"></div>
-<div class="emptycard" id="phand7" onclick="selectcard(this)"></div>
-<div class="emptycard" id="phand8" onclick="selectcard(this)"></div>
-<div class="emptycard" id="phand9" onclick="selectcard(this)"></div>
-
-
-
 	
 <script type="text/javascript">
-
-	//NEXT TODO: Figure out how to save gameid and playerid (both players)
-	// What card id to send and how to send place on board (place on board might just need to be the number)
-	// How to take all this scripting and put it in a seperate file. 
-
-	//Get game and playerid from somewhere when this page is started
-
 
 	var selectedCardHand = "0"; //Handles the card that is currently selected.
 	var emptyHandPos = "0";
@@ -305,7 +279,7 @@
 		document.getElementById("phand" + count).innerHTML = "";
 		document.getElementById("phand" + count).className = "emptyCard";
 		
-		for (var i = 0; i < 10; i++) {
+		for (var i = 0; i < 6; i++) {
 			document.getElementById("pboard" + i).innerHTML = "";
 		}
 

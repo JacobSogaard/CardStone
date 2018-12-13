@@ -147,11 +147,11 @@ exports.playCard = function(playerName, cardToPlayId, boardIndex) {
 exports.drawCard = function(playerName) {
 	var cardDrawn = {"id" : "-1"}; //dummy card if deck is empty or hand is too full
 
-	if (playerName == this.player1.name && this.currentPlayer == 'p1' && this.player1.deck.length > 0 && this.player1.hand.length < 10) {
+	if (playerName == this.player1.name && this.currentPlayer == 'p1' && this.player1.deck.length > 0 && this.player1.hand.length <= 6) {
 		cardDrawn = this.player1.deck.pop();
 		this.player1.hand.push(cardDrawn);
 
-	} else if (playerName == this.player2.name && this.currentPlayer == 'p2' && this.player2.deck.length > 0 && this.player2.hand.length < 10) {
+	} else if (playerName == this.player2.name && this.currentPlayer == 'p2' && this.player2.deck.length > 0 && this.player2.hand.length <= 6) {
 		cardDrawn = this.player2.deck.pop();
 		this.player2.hand.push(cardDrawn);
 	}
