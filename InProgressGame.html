@@ -27,56 +27,56 @@
 
 <style>
 .card {
-	padding: 30px; 
+	padding: 25px; 
 	background-color: rgb(0, 66, 107); 
 	display: inline-block;
-	font-size: 5pt;
+	font-size: 10pt;
 	height: 80px;
-	width: 40px;
+	width: 60px;
 }
 </style>
 
 <style>
 .selectedcard {
-	padding: 30px; 
+	padding: 25px; 
 	background-color: rgb(255, 152, 183); 
 	display: inline-block;
-	font-size: 5pt;
+	font-size: 10pt;
 	height: 80px;
-	width: 40px;
+	width: 60px;
 }
 </style>
 
 <style>
 .emptycard {
-	padding: 30px; 
+	padding: 25px; 
 	background-color: rgb(255, 255, 255); 
 	display: inline-block;
-	font-size: 5pt;
+	font-size: 10pt;
 	height: 80px;
-	width: 40px;
+	width: 60px;
 }
 </style>
 
 <style>
 .cardslot {
-	padding: 30px; 
+	padding: 25px; 
 	background-color: #BCC6CC; 
 	display: inline-block;
-	font-size: 5pt;
+	font-size: 10pt;
 	height: 80px;
-	width: 40px;
+	width: 60px;
 }
 </style>
 
 <style>
 .cardback {
-	padding: 30px; 
+	padding: 25px; 
 	background-color: rgb(29, 39, 46); 
 	display: inline-block;
-	font-size: 5pt;
-	height: 80px;
-	width: 40px;
+	font-size: 10pt;
+	height: 70px;
+	width: 60px;
 }
 </style>
 
@@ -238,7 +238,8 @@
 						playerHand[emptyHandPos] = data;
 						var id = "phand" + emptyHandPos;
 						emptyHandPos++;
-						document.getElementById(id).innerHTML = data.name + '\nCost: ' + data.cost + "\nAttack: " + data.attack + "\nHealth: " + data.health;
+						const cardText = data.name + '\nCost:' + data.cost + '\nAttack:' + data.attack + '\nHealth:' + data.health;
+						document.getElementById(id).innerHTML = cardText;
 						//document.getElementById(id).alt = "card";
 						document.getElementById(id).className = "card";
 					}
