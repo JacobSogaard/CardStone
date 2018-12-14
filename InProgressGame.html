@@ -141,7 +141,6 @@
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				const data =  JSON.parse(xhr.response);
 				if (data.player2.name !== ''){
-					console.log("!undefined player 2")
 					document.getElementById("endTurnBTN").disabled = true;
 					document.getElementById("drawCardBTN").disabled = true;
 				}
@@ -230,7 +229,8 @@
 		
 	function lookForUpdates() {
 		var gameId = sessionStorage.getItem("gameId");
-		const url = `http://localhost:8080/getGame/${gameId}`;
+		var playerId = sessionStorage.getItem("playerId");
+		const url = `http://localhost:8080/lookForUpdates/${gameId}/${playerId}`;
 		const xhr = new XMLHttpRequest();
 		xhr.open("GET", url);
 		xhr.send();
@@ -241,6 +241,7 @@
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				const data =  JSON.parse(xhr.response);
 				console.log("Has updated: " + data.updated);
+				
 				if (data.updated) {
 
 					if (data.player1.name == sessionStorage.getItem("playerId")){ 

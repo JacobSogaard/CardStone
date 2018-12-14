@@ -16,7 +16,7 @@ exports.player2 = {
 	totalMana: 1
 };
 
-exports.currentPlayer = 'p1';
+exports.currentPlayer = 'p1'; //Might want to reconsider this to just use the actual player
 var hasUpdated = false;
 
 exports.getGame = function() {
@@ -40,6 +40,14 @@ exports.endTurn = function() {
 	console.log("Current player end turn: " + this.currentPlayer);
 };
 
+exports.getCurrentPlayerName = function(){
+	if (this.currentPlayer == 'p1'){
+		return this.player1.name;
+	} else {
+		return this.player2.name;
+	}
+}
+
 
 exports.create = function(playerName) {
 	console.log("Create call: " + playerName);
@@ -56,6 +64,7 @@ exports.join = function(playerName) {
 	this.player2.name = playerName;
 	this.setDeck('player2', 0);
 };
+
 
 exports.attack = function(playerName, attIndex, defIndex) {
 	if (!(playerName == this.player1.name && this.currentPlayer == 'p1') ||
