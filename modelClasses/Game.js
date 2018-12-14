@@ -16,7 +16,7 @@ exports.player2 = {
 	totalMana: 1
 };
 
-exports.currentPlayer = 'p1';
+exports.currentPlayer = 'p1'; //Might want to reconsider this to just use the actual player
 var hasUpdated = false;
 
 exports.getGame = function() {
@@ -40,6 +40,14 @@ exports.endTurn = function() {
 	console.log("Current player end turn: " + this.currentPlayer);
 };
 
+exports.getCurrentPlayerName = function(){
+	if (this.currentPlayer == 'p1'){
+		return this.player1.name;
+	} else {
+		return this.player2.name;
+	}
+}
+
 
 exports.create = function(playerName) {
 	console.log("Create call: " + playerName);
@@ -56,6 +64,7 @@ exports.join = function(playerName) {
 	this.player2.name = playerName;
 	this.setDeck('player2', 0);
 };
+
 
 exports.attack = function(playerName, attIndex, defIndex) {
 	if (!(playerName == this.player1.name && this.currentPlayer == 'p1') ||
@@ -147,11 +156,11 @@ exports.playCard = function(playerName, cardToPlayId, boardIndex) {
 exports.drawCard = function(playerName) {
 	var cardDrawn = {"id" : "-1"}; //dummy card if deck is empty or hand is too full
 
-	if (playerName == this.player1.name && this.currentPlayer == 'p1' && this.player1.deck.length > 0 && this.player1.hand.length < 10) {
+	if (playerName == this.player1.name && this.currentPlayer == 'p1' && this.player1.deck.length > 0 && this.player1.hand.length <= 6) {
 		cardDrawn = this.player1.deck.pop();
 		this.player1.hand.push(cardDrawn);
 
-	} else if (playerName == this.player2.name && this.currentPlayer == 'p2' && this.player2.deck.length > 0 && this.player2.hand.length < 10) {
+	} else if (playerName == this.player2.name && this.currentPlayer == 'p2' && this.player2.deck.length > 0 && this.player2.hand.length <= 6) {
 		cardDrawn = this.player2.deck.pop();
 		this.player2.hand.push(cardDrawn);
 	}

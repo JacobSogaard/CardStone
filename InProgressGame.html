@@ -27,83 +27,62 @@
 
 <style>
 .card {
-	padding: 30px; 
+	padding: 25px; 
 	background-color: rgb(0, 66, 107); 
 	display: inline-block;
-	font-size: 5pt;
+	font-size: 10pt;
 	height: 80px;
-	width: 40px;
+	width: 60px;
 }
 </style>
 
 <style>
 .selectedcard {
-	padding: 30px; 
+	padding: 25px; 
 	background-color: rgb(255, 152, 183); 
 	display: inline-block;
-	font-size: 5pt;
+	font-size: 10pt;
 	height: 80px;
-	width: 40px;
+	width: 60px;
 }
 </style>
 
 <style>
 .emptycard {
-	padding: 30px; 
+	padding: 25px; 
 	background-color: rgb(255, 255, 255); 
 	display: inline-block;
-	font-size: 5pt;
+	font-size: 10pt;
 	height: 80px;
-	width: 40px;
+	width: 60px;
 }
 </style>
 
 <style>
 .cardslot {
-	padding: 30px; 
+	padding: 25px; 
 	background-color: #BCC6CC; 
 	display: inline-block;
-	font-size: 5pt;
+	font-size: 10pt;
 	height: 80px;
-	width: 40px;
+	width: 60px;
 }
 </style>
 
 <style>
 .cardback {
-	padding: 30px; 
+	padding: 25px; 
 	background-color: rgb(29, 39, 46); 
 	display: inline-block;
-	font-size: 5pt;
-	height: 80px;
-	width: 40px;
+	font-size: 10pt;
+	height: 70px;
+	width: 60px;
 }
 </style>
 
-<body>
-<!--
-<div class="container">
-	<div class="container">
-		<img src="Images/cardback" alt="card" id="ophand1" style="width:5%;">
-		<div class="centered">7</div></div>
-	<div class="container">
-		<img src="Images/cardback" alt="card" id="ophand2" style="width:5%;">
-		<div class="centered">7</div></div>
-	<img src="Images/cardback" alt="card" id="ophand3" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand4" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand5" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand6" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand7" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand8" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand9" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand10" style="width:5%;">
-</div> 
--->
+<body onload="setButtons()">
 
-<div class="cardback"></div>
-<div class="cardback"></div>
-<div class="cardback"></div>
-<div class="cardback"></div>
+
 <div class="cardback"></div>
 <div class="cardback"></div>
 <div class="cardback"></div>
@@ -119,10 +98,6 @@
 <div class="cardslot" id="oboard3" onclick="target(this)">CARD 4</div>
 <div class="cardslot" id="oboard4" onclick="target(this)">CARD 5</div>
 <div class="cardslot" id="oboard5" onclick="target(this)">CARD 6</div>
-<div class="cardslot" id="oboard6" onclick="target(this)">CARD 7</div>
-<div class="cardslot" id="oboard7" onclick="target(this)">CARD 7</div>
-<div class="cardslot" id="oboard8" onclick="target(this)">CARD 9</div>
-<div class="cardslot" id="oboard9" onclick="target(this)">CARD 10</div>
 <br><br><br>
 
 <!-- Player cards on board -->
@@ -133,10 +108,6 @@
 <div class="cardslot" id="pboard3" onclick="playCard(this)"></div>
 <div class="cardslot" id="pboard4" onclick="playCard(this)"></div>
 <div class="cardslot" id="pboard5" onclick="playCard(this)"></div>
-<div class="cardslot" id="pboard6" onclick="playCard(this)"></div>
-<div class="cardslot" id="pboard7" onclick="playCard(this)"></div>
-<div class="cardslot" id="pboard8" onclick="playCard(this)"></div>
-<div class="cardslot" id="pboard9" onclick="playCard(this)"></div>
 <br>
 <button id="lookForUpdatesBTN" onclick="lookForUpdates()">Look for updates!</button>
 <button id="drawCardBTN" onclick="drawCard()">Draw a card!</button>
@@ -149,27 +120,34 @@
 <div class="emptycard" id="phand3" onclick="selectcard(this)"></div>
 <div class="emptycard" id="phand4" onclick="selectcard(this)"></div>
 <div class="emptycard" id="phand5" onclick="selectcard(this)"></div>
-<div class="emptycard" id="phand6" onclick="selectcard(this)"></div>
-<div class="emptycard" id="phand7" onclick="selectcard(this)"></div>
-<div class="emptycard" id="phand8" onclick="selectcard(this)"></div>
-<div class="emptycard" id="phand9" onclick="selectcard(this)"></div>
-
-
-
 	
 <script type="text/javascript">
-
-	//NEXT TODO: Figure out how to save gameid and playerid (both players)
-	// What card id to send and how to send place on board (place on board might just need to be the number)
-	// How to take all this scripting and put it in a seperate file. 
-
-	//Get game and playerid from somewhere when this page is started
-
 
 	var selectedCardHand = "0"; //Handles the card that is currently selected.
 	var emptyHandPos = "0";
 	var playerHand = [];
 	var selectedCardBoard = "0";
+
+	function setButtons(){
+		console.log("Start of game");
+		const gameId = sessionStorage.getItem("gameId");
+		const url = `http://localhost:8080/getGame/${gameId}`;
+		const xhr = new XMLHttpRequest();
+		xhr.open("GET", url);
+		xhr.send();
+
+		//Check that we actually get a valid response
+		xhr.onload = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				const data =  JSON.parse(xhr.response);
+				if (data.player2.name !== ''){
+					document.getElementById("endTurnBTN").disabled = true;
+					document.getElementById("drawCardBTN").disabled = true;
+				}
+			}
+		}
+
+	}
 
 	function selectcard(card){
 		selectedCardHand = card;
@@ -219,6 +197,7 @@
 		xhr.open("PUT", url);
 		xhr.send();
 		document.getElementById("endTurnBTN").disabled = true;
+		document.getElementById("drawCardBTN").disabled = true;
 	}
 
 	function drawCard() {
@@ -238,7 +217,8 @@
 						playerHand[emptyHandPos] = data;
 						var id = "phand" + emptyHandPos;
 						emptyHandPos++;
-						document.getElementById(id).innerHTML = data.name + '\nCost: ' + data.cost + "\nAttack: " + data.attack + "\nHealth: " + data.health;
+						const cardText = data.name + '\nCost:' + data.cost + '\nAttack:' + data.attack + '\nHealth:' + data.health;
+						document.getElementById(id).innerHTML = cardText;
 						//document.getElementById(id).alt = "card";
 						document.getElementById(id).className = "card";
 					}
@@ -249,7 +229,8 @@
 		
 	function lookForUpdates() {
 		var gameId = sessionStorage.getItem("gameId");
-		const url = `http://localhost:8080/getGame/${gameId}`;
+		var playerId = sessionStorage.getItem("playerId");
+		const url = `http://localhost:8080/lookForUpdates/${gameId}/${playerId}`;
 		const xhr = new XMLHttpRequest();
 		xhr.open("GET", url);
 		xhr.send();
@@ -260,6 +241,7 @@
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				const data =  JSON.parse(xhr.response);
 				console.log("Has updated: " + data.updated);
+				
 				if (data.updated) {
 
 					if (data.player1.name == sessionStorage.getItem("playerId")){ 
@@ -280,6 +262,7 @@
 					}
 					
 					document.getElementById("endTurnBTN").disabled = false;
+					document.getElementById("drawCardBTN").disabled = false;
 			}
 			}
 		}
@@ -304,7 +287,7 @@
 		document.getElementById("phand" + count).innerHTML = "";
 		document.getElementById("phand" + count).className = "emptyCard";
 		
-		for (var i = 0; i < 10; i++) {
+		for (var i = 0; i < 6; i++) {
 			document.getElementById("pboard" + i).innerHTML = "";
 		}
 

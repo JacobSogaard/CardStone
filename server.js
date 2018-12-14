@@ -20,8 +20,6 @@ app.get('/InProgressGame', function(request, response) {
 });
 
 app.get('/joinGame/:gameId/:playerId', function(request, response) {
-
-
   if (typeof games[request.params.gameId] !== 'undefined') { 
     var game = games[request.params.gameId];
     game.join(request.params.playerId);
@@ -99,6 +97,23 @@ app.get('/getGame/:gameId', function(request, response) {
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.set("Content-Type", "text/json"); 
   response.end(JSON.stringify(gameState));
+});
+
+app.get('/lookForUpdates/:gameId/:playerId', function(request, response){
+  var gameState = games[request.params.gameId];
+
+  if (gameState.getCurrentPlayerName() == request.params.playerId) {
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.set("Content-Type", "text/json"); 
+    response.end(JSON.stringify(gameState.getGame()));
+  } else {
+    response.status(400);
+    response.send("Not current player");
+  }
+
+  
+
+
 });
 
 
