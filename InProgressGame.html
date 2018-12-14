@@ -80,25 +80,8 @@
 }
 </style>
 
-<body>
-<!--
-<div class="container">
-	<div class="container">
-		<img src="Images/cardback" alt="card" id="ophand1" style="width:5%;">
-		<div class="centered">7</div></div>
-	<div class="container">
-		<img src="Images/cardback" alt="card" id="ophand2" style="width:5%;">
-		<div class="centered">7</div></div>
-	<img src="Images/cardback" alt="card" id="ophand3" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand4" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand5" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand6" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand7" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand8" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand9" style="width:5%;">
-	<img src="Images/cardback" alt="card" id="ophand10" style="width:5%;">
-</div> 
--->
+<body onload="setButtons()">
+
 
 <div class="cardback"></div>
 <div class="cardback"></div>
@@ -144,6 +127,28 @@
 	var emptyHandPos = "0";
 	var playerHand = [];
 	var selectedCardBoard = "0";
+
+	function setButtons(){
+		console.log("Start of game");
+		const gameId = sessionStorage.getItem("gameId");
+		const url = `http://localhost:8080/getGame/${gameId}`;
+		const xhr = new XMLHttpRequest();
+		xhr.open("GET", url);
+		xhr.send();
+
+		//Check that we actually get a valid response
+		xhr.onload = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				const data =  JSON.parse(xhr.response);
+				if (data.player2.name !== ''){
+					console.log("!undefined player 2")
+					document.getElementById("endTurnBTN").disabled = true;
+					document.getElementById("drawCardBTN").disabled = true;
+				}
+			}
+		}
+
+	}
 
 	function selectcard(card){
 		selectedCardHand = card;
@@ -193,6 +198,7 @@
 		xhr.open("PUT", url);
 		xhr.send();
 		document.getElementById("endTurnBTN").disabled = true;
+		document.getElementById("drawCardBTN").disabled = true;
 	}
 
 	function drawCard() {
@@ -255,6 +261,7 @@
 					}
 					
 					document.getElementById("endTurnBTN").disabled = false;
+					document.getElementById("drawCardBTN").disabled = false;
 			}
 			}
 		}
