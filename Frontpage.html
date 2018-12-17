@@ -23,7 +23,8 @@
 	<input type="text" name="gameid" id="gameId" placeholder="Your game id"/>
 	<input type="text" name="playerid" id="playerId" placeholder="Your player id"/>
 </form>
-<br><br>
+<br>
+	<p id="gameNameTaken" style="color:red;"></p>
 	<button onclick="join()" type="submit" id="joinBTN">Join</button>
 	<button onclick="create()" type="submit" id="createBTN">Create</button>
 	<br><br>
@@ -67,6 +68,10 @@ using a GET request to the server-->
 		function processreq(e) { 
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				document.getElementById("startBTN").disabled = false;
+			}
+
+			if (xhr.status == 400) {
+				document.getElementById("gameNameTaken").innerHTML = "Game name already taken";
 			}
 		}
 	}
