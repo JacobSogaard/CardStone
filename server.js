@@ -70,10 +70,12 @@ app.get('/playCard/:gameId/:playerId/:cardId/:placeOnBoard', function(request, r
 app.get('/targetCard/:gameId/:playerId/:targetingCardIndex/:targetedCardIndex', function(request, response)  {
   var theGame = request.params.gameId;
   var thePlayer = request.params.playerId;
+
   var targetingCard = Number(request.params.targetingCardIndex);
   var targetedCard = Number(request.params.targetedCardIndex);
-
+  console.log("sdælgfældsfæld");
   var updatedPlayers = games[theGame].attack(thePlayer, targetingCard, targetedCard);
+  console.log("Updated players: " + updatedPlayers);
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.set("Content-Type", "text/json");
   response.end(JSON.stringify(updatedPlayers));

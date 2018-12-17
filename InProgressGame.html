@@ -160,7 +160,6 @@
 				document.getElementById(pos.id).className = "selectedcard";
 				selectedCardBoard = pos;
 			}
-			console.log(true);
 			return;
 		}
 
@@ -240,26 +239,22 @@
 		function processreq(e) { 
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				const data =  JSON.parse(xhr.response);
-				console.log("Has updated: " + data.updated);
 				
 				if (data.updated) {
-
+					var pboard;
+					var opboard;
 					if (data.player1.name == sessionStorage.getItem("playerId")){ 
-						var board = data.player2.board;
+						opboard = data.player2.board;
+						pboard = data.player1;
 					} else {
-						var board = data.player1.board;
+						opboard = data.player1.board;
+						pboard = data.player2;
 					}
+					updateBoard(pboard);
+					updateOpponentBoard(opboard);
 					
 					//var board = data.board;
-					count = 0;
-					for (var card in board) {
-						if (board[card] != 0) {
-							document.getElementById("oboard" + count).innerHTML = board[card].name + '\nCost: ' + board[card].cost 
-								+ "\nAttack: " + board[card].attack + "\nHealth: " + board[card].health;
-							document.getElementById("oboard" + count).className = "card";
-						}
-						count++;
-					}
+					
 					
 					document.getElementById("endTurnBTN").disabled = false;
 					document.getElementById("drawCardBTN").disabled = false;
@@ -270,6 +265,23 @@
 			
 	}
 
+	function updateOpponentBoard(board){
+		for (var i = 0; i < 6; i++) {
+			document.getElementById("oboard" + i).innerHTML = "";
+			document.getElementById("oboard" + i).className = "cardslot";
+		}
+		
+		count = 0;
+		for (var card in board) {
+			if (board[card] != 0) {
+				document.getElementById("oboard" + count).innerHTML = board[card].name + '\nCost: ' + board[card].cost 
+					+ "\nAttack: " + board[card].attack + "\nHealth: " + board[card].health;
+				document.getElementById("oboard" + count).className = "card";
+			}
+		count++;
+		}
+	}
+
 	//Function to update player board using xhr response after it has been json parsed
 	function updateBoard(data){
 		var hand = data.hand;
@@ -277,7 +289,6 @@
 		
 		var count = 0;
 		for (var card in hand) {
-				console.log("Hand: " + card);
 				document.getElementById("phand" + count).innerHTML = hand[card].name + '\nCost: ' + hand[card].cost 
 					+ "\nAttack: " + hand[card].attack + "\nHealth: " + hand[card].health;
 			count++;
@@ -289,6 +300,7 @@
 		
 		for (var i = 0; i < 6; i++) {
 			document.getElementById("pboard" + i).innerHTML = "";
+			document.getElementById("pboard" + i).className = "cardslot";
 		}
 
 		count = 0;
@@ -296,6 +308,7 @@
 			if (board[bcard] != 0) {
 				document.getElementById("pboard" + count).innerHTML = board[bcard].name + '\nCost: ' + board[bcard].cost 
 					+ "\nAttack: " + board[bcard].attack + "\nHealth: " + board[bcard].health;
+				document.getElementById("pboard" + count).className = "card";
 			}
 			count++;
 		}
@@ -304,20 +317,40 @@
 
 	function target(pos) {
 		if (pos.className == "card" && selectedCardBoard != "0") {
+	
 			const gameId = sessionStorage.getItem("gameId");
 			const playerId = sessionStorage.getItem("playerId");
-			const url = `http://localhost:8080/targetCard/${gameId}/${playerId}/${selectedCardBoard.id}/${pos.id}`;
+			const targetingCardIndex = selectedCardBoard.id.substring(6,7);
+			const targetedCardIndex = pos.id.substring(6,7);
+	
+			const url = `http://localhost:8080/targetCard/${gameId}/${playerId}/${targetingCardIndex}/${targetedCardIndex}`;
 			const xhr = new XMLHttpRequest();
 			xhr.open("GET", url);
 			xhr.send();
 
+			//Set some check on response code
 			xhr.onload = function() {
-				var update = JSON.parse(xhr.response);
-				updateBoard(update);
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					const data =  JSON.parse(xhr.response);
+					if (playerId == data.player1.name) {
+						updateBoard(data.player1);
+						updateOpponentBoard(data.player2.board);
+					} else {
+						updateBoard(data.player2);
+						updateOpponentBoard(data.player1.board);
+					}
+
+					
+				}
+				
+				
 			}
+			document.getElementById(selectedCardBoard.id).className = "card";
+			selectedCardBoard = "0";
+			
+			
 		}
-		selectedCardBoard = "0";
-		document.getElementById(pos.id).className = "card";
+		
 	}
 
 
