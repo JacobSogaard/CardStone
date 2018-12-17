@@ -2,7 +2,7 @@ exports.player1 = {
 	name: "",
 	deck: [],
 	hand: [],
-	board: [0,0,0,0,0,0,0,0,0,0],
+	board: [0,0,0,0,0,0],
 	currentMana: 0,
 	totalMana: 1
 };
@@ -11,7 +11,7 @@ exports.player2 = {
 	name: "",
 	deck: [],
 	hand: [],
-	board: [0,0,0,0,0,0,0,0,0,0],
+	board: [0,0,0,0,0,0],
 	currentMana: 0,
 	totalMana: 1
 };
@@ -67,53 +67,40 @@ exports.join = function(playerName) {
 
 
 exports.attack = function(playerName, attIndex, defIndex) {
-	if (!(playerName == this.player1.name && this.currentPlayer == 'p1') ||
-		!(playerName == this.player2.name && this.currentPlayer == 'p2') ) {
+	if ((playerName == this.player1.name && this.currentPlayer != 'p1') ||
+		(playerName == this.player2.name && this.currentPlayer != 'p2') ) {
 		return this.getGame();
 	}
 
 	if (this.currentPlayer == 'p1') {
-		var attacker = this.player1.board[attIndex];
-		var defender = this.player2.board[defIndex];
-
-		attacker.health = attacker.health - defender.attack;
-		defender.health = defender.health - attacker.attack;
-
-		if (attHealth < 1) {
-			this.player1.board.splice(attIndex, 1); // Remove if dead
-		} else {
-			this.player1.board[attIndex] = attacker;
-		}
-
-		if (defHealth < 1 ) {
-			this.player2.board.splice(defIndex, 1);
-		} else {
-			this.player2.board[defIndex] = defender;
-		}
+		attackLogic(this.player1, this.player2, attIndex, defIndex);
 	}
 	if (this.currentPlayer == 'p2') {
-		var attacker = this.player2.board[attIndex];
-		var defender = this.player1.board[defIndex];
-
-		attacker.health = attacker.health - defender.attack;
-		defender.health = defender.health - attacker.attack;
-
-		if (attHealth < 1) {
-			this.player2.board.splice(attIndex, 1); // Remove if dead
-		} else {
-			this.player2.board[attIndex] = attacker;
-		}
-
-		if (defHealth < 1 ) {
-			this.player1.board.splice(defIndex, 1);
-		} else {
-			this.player1.board[defIndex] = defender;
-		}
+		attackLogic(this.player2, this.player1, attIndex, defIndex);
 	}
-
 
 	return this.getGame();
 };
+
+attackLogic = function(attack, defend, attIndex, defIndex) {
+	var attacker = attack.board[attIndex];
+	var defender = defend.board[defIndex];
+
+	var attHealth = attacker.health = attacker.health - defender.attack;
+	var defHealth = defender.health = defender.health - attacker.attack;
+
+	if (attHealth < 1) {
+		attack.board.splice(attIndex, 1); // Remove if dead
+	} else {
+		attack.board[attIndex] = attacker;
+	}
+
+	if (defHealth < 1 ) {
+		defend.board.splice(defIndex, 1);
+	} else {
+		defend.board[defIndex] = defender;
+	}
+}
 
 exports.playCard = function(playerName, cardToPlayId, boardIndex) {
 	if (playerName == this.player1.name && this.currentPlayer == 'p1') {
@@ -126,8 +113,8 @@ exports.playCard = function(playerName, cardToPlayId, boardIndex) {
 				var cardPlayed = this.player1.hand[card];
 				this.player1.hand.splice(card, 1);
 				this.player1.board[boardIndex] = cardPlayed;
-				console.log("boardIndex: " + boardIndex);
-				console.log(this.player1.board);
+				//console.log("boardIndex: " + boardIndex);
+				//console.log(this.player1.board);
 				this.player1.currentMana = this.player1.currentMana - cardPlayed.cost;
 				return this.player1;
 			}
