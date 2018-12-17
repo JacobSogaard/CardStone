@@ -35,11 +35,14 @@ app.get('/createGame/:gameId/:playerId', function(request, response) {
   var game = require('./modelClasses/Game');
 
   var playerName = request.params.playerId;
-  game.create(playerName);
-
-  games[request.params.gameId] = game;
-
-  response.sendFile(path.join(__dirname+'/InProgressGame.html'));
+  if (games[request.params.gameId] == undefined){
+    game.create(playerName);
+    games[request.params.gameId] = game;
+    response.sendFile(path.join(__dirname+'/InProgressGame.html'));
+  } else {
+    response.status(400);
+    response.send('Game name already taken');
+  }
 
 });
 
@@ -73,7 +76,6 @@ app.get('/targetCard/:gameId/:playerId/:targetingCardIndex/:targetedCardIndex', 
 
   var targetingCard = Number(request.params.targetingCardIndex);
   var targetedCard = Number(request.params.targetedCardIndex);
-  console.log("sdælgfældsfæld");
   var updatedPlayers = games[theGame].attack(thePlayer, targetingCard, targetedCard);
   console.log("Updated players: " + updatedPlayers);
   response.setHeader("Access-Control-Allow-Origin", "*");
